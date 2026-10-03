@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="To-Do List — лабораторная работа №4">
+  <title>To-Do List</title>
+  <link rel="stylesheet" href="dist/css/main.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="container app-header__inner">
+      <h1 class="app-header__title">Мои задачи</h1>
+
+      <button
+        type="button"
+        class="theme-toggle js-theme-toggle"
+        aria-label="Переключить на тёмную тему">
+        <span class="theme-toggle__icon" aria-hidden="true">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div class="container">
+
+      <section class="toolbar" aria-label="Панель управления задачами">
+        <div class="search">
+          <label for="search" class="visually-hidden">Поиск задач</label>
+          <input
+            type="search"
+            id="search"
+            class="search__input js-search"
+            placeholder="Найти задачу..."
+            autocomplete="off">
+        </div>
+
+        <button
+          type="button"
+          class="button button--primary js-add-task">
+          + Добавить задачу
+        </button>
+      </section>
+
+      <section
+        class="task-section"
+        aria-labelledby="tasks-heading">
+        <h2 id="tasks-heading" class="visually-hidden">Список задач</h2>
+
+        <ul class="task-list js-task-list" id="task-list">
+            
+        </ul>
+
+        <p class="task-list__empty js-empty-message" hidden>
+          Задач пока нет. Добавьте первую!
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <dialog
+    class="modal js-task-dialog"
+    aria-labelledby="task-dialog-title">
+
+    <form method="dialog" class="modal__form js-task-form" novalidate>
+      <h2 id="task-dialog-title" class="modal__title">Новая задача</h2>
+
+      <div class="form-group">
+        <label for="task-title">Название задачи</label>
+        <input
+          type="text"
+          id="task-title"
+          name="title"
+          class="form-group__input"
+          required
+          maxlength="200"
+          autocomplete="off">
+        <span class="form-group__error js-form-error" role="alert"></span>
+      </div>
+
+      <div class="modal__actions">
+        <button
+          type="button"
+          class="button button--ghost js-cancel-dialog">
+          Отмена
+        </button>
+        <button
+          type="submit"
+          class="button button--primary js-submit-task">
+          Сохранить
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+  <div
+    class="visually-hidden js-live-region"
+    role="status"
+    aria-live="polite"></div>
+
+</body>
+</html>
