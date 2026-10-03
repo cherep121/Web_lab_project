@@ -1,0 +1,15 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "To-Do List — лабораторная №4 (Sass + vanilla JS/jQuery)",
+  "scripts": {
+    "sass:dev": "sass --watch scss/main.scss:dist/css/main.css",
+    "build": "sass --no-source-map --style=compressed scss/main.scss:dist/css/main.css"
+  },
+  "author": "Чистюхин Антон",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "sass": "^1.105.1"
+  }
+} 
