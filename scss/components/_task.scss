@@ -1,0 +1,90 @@
+@use '../utils' as *;
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.task-empty {
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: 40px 0;
+  font-size: rem(15px);
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: rem(12px) rem(14px);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: background-color $transition, border-color $transition,
+              box-shadow $transition, transform $transition;
+
+  &:hover {
+    box-shadow: var(--shadow-hover);
+  }
+
+  &[data-done='true'] {
+    background: var(--color-bg-alt);
+
+    .task__title {
+      text-decoration: line-through;
+      color: var(--color-text-muted);
+    }
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  &__checkbox {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    accent-color: var(--color-accent);
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 3px solid var(--color-accent-soft);
+      outline-offset: 2px;
+    }
+  }
+
+  &__title {
+    flex: 1 1 auto;
+    min-width: 0;
+    color: var(--color-text);
+    font-size: rem(15px);
+    cursor: pointer;
+    transition: color $transition;
+    @include truncate;
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 0 0 auto;
+  }
+}
+
+.task-section {
+  margin-top: 8px;
+}

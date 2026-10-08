@@ -1,0 +1,38 @@
+@use '../utils' as *;
+
+.search {
+  flex: 1 1 auto;
+  position: relative;
+
+  &__input {
+    width: 100%;
+    padding: rem(10px) rem(14px);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: rem(15px);
+    transition: border-color $transition, box-shadow $transition,
+                background-color $transition, color $transition;
+
+    &::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    &:hover {
+      border-color: var(--color-accent-soft);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-focus);
+    }
+
+    &:focus-visible {
+      outline: 3px solid var(--color-accent-soft);
+      outline-offset: 2px;
+    }
+  }
+}

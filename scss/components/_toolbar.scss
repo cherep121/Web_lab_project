@@ -1,0 +1,12 @@
+@use '../utils' as *;
+
+.toolbar {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  margin-bottom: 24px;
+
+  @include respond-to(mobile) {
+    gap: 16px;
+  }
+}

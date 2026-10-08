@@ -1,0 +1,53 @@
+@use '../utils' as *;
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+
+  &__label,
+  label {
+    font-size: rem(14px);
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  &__input,
+  input {
+    width: 100%;
+    padding: rem(10px) rem(14px);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: rem(15px);
+    transition: border-color $transition, box-shadow $transition,
+                background-color $transition, color $transition;
+
+    &::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    &:hover {
+      border-color: var(--color-accent-soft);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-focus);
+    }
+
+    &[aria-invalid='true'] {
+      border-color: var(--color-danger);
+    }
+  }
+
+  &__error {
+    min-height: 1.2em;
+    font-size: rem(13px);
+    color: var(--color-danger);
+  }
+}

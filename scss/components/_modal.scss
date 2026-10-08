@@ -1,0 +1,45 @@
+@use '../utils' as *;
+
+.modal {
+  width: 100%;
+  max-width: 480px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-hover);
+  transition: background-color $transition, color $transition;
+
+  margin: auto;
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+
+  &::backdrop {
+    background: rgba(15, 20, 25, .55);
+    backdrop-filter: blur(3px);
+  }
+
+  &__form {
+    padding: rem(24px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    margin: 0 0 16px;
+    font-size: rem(20px);
+    color: var(--color-text);
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 8px;
+
+    @include respond-to(mobile) {
+      gap: 12px;
+    }
+  }
+}
