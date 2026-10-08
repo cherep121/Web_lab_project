@@ -3,17 +3,21 @@
 ## Лабороторная работа №4
   📌 ${\color{#FF69B4}Тема: \ Препроцессоры \ и \ верстка}$
 
+Учебный проект курса — приложение **To-Do List** с упором на доступность
+интерфейса (a11y). Реализовано на Sass + vanilla JS, проверено через
+Lighthouse Accessibility (A1–A7).
+
 ## 🛠 Стек
 - **HTML5** — семантическая разметка
 - **SCSS (Sass)** — модульная архитектура стилей
-- **JavaScript (jQuery)** — интерактив: карусель, модальное окно, форма
+- **JavaScript (vanilla)** — интерактив: список задач, поиск, модальное окно, темы, `localStorage`
 - **Node.js / npm** — сборка проекта
 - **БЭМ** — методология именования классов
 - **Git**
 
 ## 📁 Структура
 ```
-Web_lab/
+Web-lab-project/
 ├─ index.html
 ├─ scss/ <-- исходники стилей
 │ ├─ utils/ <-- переменные, функции, миксины
@@ -21,23 +25,24 @@ Web_lab/
 │ │ ├─ _functions.scss
 │ │ ├─ _mixins.scss
 │ │ └─ _index.scss
-│ ├─ base/ <-- reset и типографика
+│ ├─ base/ <-- reset, типографика, утилита visually-hidden
 │ │ ├─ _reset.scss
 │ │ ├─ _typography.scss
 │ │ └─ _index.scss
 │ ├─ layout/ <-- каркас страницы
-│ │ ├─ _header.scss
-│ │ ├─ _hero.scss
-│ │ ├─ _sections.scss
-│ │ ├─ _footer.scss
+│ │ ├─ _container.scss
+│ │ ├─ _app-header.scss
+│ │ ├─ _app-main.scss
 │ │ └─ _index.scss
 │ ├─ components/ <-- переиспользуемые компоненты
 │ │ ├─ _button.scss
-│ │ ├─ _card.scss
+│ │ ├─ _button-icon.scss
+│ │ ├─ _toolbar.scss
+│ │ ├─ _search.scss
+│ │ ├─ _task.scss
+│ │ ├─ _form-group.scss
 │ │ ├─ _modal.scss
-│ │ ├─ _form.scss
-│ │ ├─ _carousel.scss
-│ │ ├─ _scroll-top.scss
+│ │ ├─ _theme-toggle.scss
 │ │ └─ _index.scss
 │ ├─ themes/ <-- светлая и тёмная темы
 │ │ ├─ _light.scss
@@ -48,15 +53,7 @@ Web_lab/
 │ └─ css/
 │ └─ main.css
 ├─ js/
-│ └─ script.js <-- динамика на jQuery
-├─ data/
-│ └─ portfolio.json <-- данные для галереи
-├─ images/
-│ ├─ avatar.png
-│ ├─ image.png
-│ ├─ image2.png
-│ ├─ image3.png
-│ └─ image4.png
+│ └─ main.js <-- логика приложения (vanilla JS)
 ├─ node_modules/ <-- зависимости (в .gitignore)
 ├─ package.json <-- скрипты и зависимости
 ├─ package-lock.json
@@ -64,18 +61,16 @@ Web_lab/
 └─ .gitignore
 ```
 **Описание:**
-- `index.html` — основная страница-визитка
+- `index.html` — страница приложения To-Do List
 - `scss/` — исходники стилей на препроцессоре Sass
   - `utils/` — переменные, функции, миксины
-  - `base/` — сброс стилей и типографика
-  - `layout/` — крупные блоки страницы (хедер, hero, футер)
-  - `components/` — переиспользуемые компоненты (кнопка, карточка, модалка)
+  - `base/` — сброс стилей, типографика, утилита `visually-hidden`
+  - `layout/` — каркас страницы (контейнер, хедер, main)
+  - `components/` — переиспользуемые компоненты (кнопки, тулбар, поиск, задача, форма, модалка, переключатель темы)
   - `themes/` — генерация CSS-переменных для светлой и тёмной темы
   - `main.scss` — точка входа, собирает все модули
 - `dist/css/main.css` — собранный CSS (генерируется командой `npm run build`)
-- `js/script.js` — весь JS-код на jQuery (меню, галерея, форма, карусель, подсветка меню, кнопка «Вверх», переключатель темы)
-- `data/portfolio.json` — данные о работах для динамической галереи
-- `images/` — аватар и скриншоты проектов
+- `js/main.js` — вся логика приложения: список задач, добавление через модалку, редактирование, удаление, поиск, отметка «выполнено», переключение темы, сохранение в `localStorage`
 - `package.json` — скрипты сборки (`sass:dev`, `build`) и зависимости
 - `README.md` — документация проекта
 - `.gitignore` — исключения для Git (`node_modules/`, `dist/`)

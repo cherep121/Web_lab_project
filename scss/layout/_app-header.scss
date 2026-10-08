@@ -22,6 +22,17 @@
   }
 }
 
+:root:not([data-theme='dark']) {
+  .app-header {
+    background: var(--color-accent);
+    border-bottom-color: var(--color-accent);
+
+    &__title {
+      color: #fff;
+    }
+  }
+}
+
 @media (max-width: 479px) {
   .app-header__title {
     font-size: rem(20px);

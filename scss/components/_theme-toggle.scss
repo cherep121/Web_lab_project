@@ -38,6 +38,24 @@
   }
 }
 
+:root:not([data-theme='dark']) {
+  .theme-toggle {
+    background: #fff;
+    border-color: rgb(80, 80, 80);
+    color: #000;
+
+    &:hover {
+      background: #fff;
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    &:focus-visible {
+      border-color: var(--color-accent);
+    }
+  }
+}
+
 [data-theme='dark'] {
   .theme-toggle__icon--moon {
     display: none;
