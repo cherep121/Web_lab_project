@@ -43,3 +43,22 @@
     }
   }
 }
+
+@media (max-width: 479px) {
+  .modal {
+    max-width: calc(100vw - 24px);
+    margin: 12px;
+  }
+
+  .modal__form {
+    padding: rem(20px);
+  }
+
+  .modal__actions {
+    flex-direction: column-reverse;
+
+    .button {
+      width: 100%;
+    }
+  }
+}

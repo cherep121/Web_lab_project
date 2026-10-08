@@ -88,3 +88,24 @@
 .task-section {
   margin-top: 8px;
 }
+
+@media (max-width: 479px) {
+  .task {
+    padding: rem(10px) rem(12px);
+    gap: 8px;
+  }
+
+  .task__row {
+    gap: 10px;
+  }
+
+  .task__title {
+    font-size: rem(14px);
+  }
+
+  .button-icon {
+    width: 32px;
+    height: 32px;
+    font-size: rem(14px);
+  }
+}

@@ -6,7 +6,17 @@
   gap: 12px;
   margin-bottom: 24px;
 
-  @include respond-to(mobile) {
+  @include respond-to(tablet) {
     gap: 16px;
+  }
+}
+
+@media (max-width: 479px) {
+  .toolbar {
+    flex-direction: column;
+  }
+
+  .toolbar .button {
+    width: 100%;
   }
 }
