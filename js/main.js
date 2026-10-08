@@ -1,6 +1,7 @@
 'use strict';
 
 const STORAGE_KEY = 'todo.tasks';
+const THEME_KEY = 'todo.theme';
 
 function loadTasks() {
   try {
@@ -50,6 +51,7 @@ const formErrorEl    = document.querySelector('.js-form-error');
 const addButtonEl    = document.querySelector('.js-add-task');
 const cancelBtnEl    = document.querySelector('.js-cancel-dialog');
 const liveRegionEl   = document.querySelector('.js-live-region');
+const themeToggleEl  = document.querySelector('.js-theme-toggle');
 
 let tasks = loadTasks();
 let editingTaskId = null;
@@ -254,9 +256,40 @@ function deleteTask(li) {
   announce('Задача удалена: ' + title);
 }
 
-addButtonEl.addEventListener('click', openCreateDialog);
+function applyTheme(theme) {
+  if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    themeToggleEl?.setAttribute('aria-label', 'Переключить на светлую тему');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+    themeToggleEl?.setAttribute('aria-label', 'Переключить на тёмную тему');
+  }
+}
 
+function getInitialTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  if (saved === 'dark' || saved === 'light') return saved;
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') === 'dark'
+    ? 'dark'
+    : 'light';
+  const next = current === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  try {
+    localStorage.setItem(THEME_KEY, next);
+  } catch (err) {
+    console.warn('Не удалось сохранить тему:', err);
+  }
+}
+
+addButtonEl.addEventListener('click', openCreateDialog);
 cancelBtnEl.addEventListener('click', closeDialog);
+themeToggleEl?.addEventListener('click', toggleTheme);
 
 formEl.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -327,6 +360,7 @@ searchInputEl.addEventListener('input', () => {
   applyFilter();
 });
 
+applyTheme(getInitialTheme());
 sortTasks();
 renderTasks();
 console.log('Загружено задач:', tasks.length, tasks);
