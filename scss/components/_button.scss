@@ -1,0 +1,58 @@
+@use '../utils' as *;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: rem(10px) rem(20px);
+  border-radius: var(--radius-sm);
+  border: 2px solid transparent;
+  font-family: inherit;
+  font-size: rem(15px);
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-text);
+  transition: background-color $transition, color $transition,
+              border-color $transition, transform $transition,
+              box-shadow $transition;
+
+  &--primary {
+    background: var(--color-accent);
+    color: #fff;
+
+    &:hover:not(:disabled) {
+      background: var(--color-accent-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+  }
+
+  &--ghost {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+
+    &:hover:not(:disabled) {
+      background: var(--color-accent);
+      color: #fff;
+    }
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--color-accent-soft);
+    outline-offset: 2px;
+  }
+}

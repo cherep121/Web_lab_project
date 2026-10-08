@@ -1,0 +1,37 @@
+@use '../utils' as *;
+
+.button-icon {
+  @include flex-center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: var(--radius-xs);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: rem(16px);
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color $transition, color $transition,
+              border-color $transition;
+
+  &:hover {
+    background: var(--color-bg-alt);
+    color: var(--color-text);
+    border-color: var(--color-border);
+  }
+
+  &--edit:hover {
+    color: var(--color-accent);
+  }
+
+  &--delete:hover {
+    color: var(--color-danger);
+    border-color: var(--color-danger);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--color-accent-soft);
+    outline-offset: 2px;
+  }
+}

@@ -38,14 +38,29 @@ function generateId() {
   return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
 }
 
-const taskListEl = document.querySelector('.js-task-list');
+const taskListEl     = document.querySelector('.js-task-list');
 const emptyMessageEl = document.querySelector('.js-empty-message');
+const searchInputEl  = document.querySelector('.js-search');
+
+const dialogEl       = document.querySelector('.js-task-dialog');
+const dialogTitleEl  = document.querySelector('#task-dialog-title');
+const formEl         = document.querySelector('.js-task-form');
+const titleInputEl   = document.querySelector('#task-title');
+const formErrorEl    = document.querySelector('.js-form-error');
+const addButtonEl    = document.querySelector('.js-add-task');
+const cancelBtnEl    = document.querySelector('.js-cancel-dialog');
+const liveRegionEl   = document.querySelector('.js-live-region');
+
+let tasks = loadTasks();
+let editingTaskId = null;
+let searchQuery = '';
 
 function renderTasks() {
   taskListEl.innerHTML = '';
 
   if (tasks.length === 0) {
     emptyMessageEl.hidden = false;
+    emptyMessageEl.textContent = 'Задач пока нет. Добавьте первую!';
     return;
   }
   emptyMessageEl.hidden = true;
@@ -53,6 +68,8 @@ function renderTasks() {
   for (const task of tasks) {
     taskListEl.appendChild(createTaskElement(task));
   }
+
+  applyFilter();
 }
 
 function createTaskElement(task) {
@@ -125,7 +142,191 @@ function createIconButton({ id, labelledBy, labelText, className, icon }) {
   return btn;
 }
 
-let tasks = loadTasks();
+function openCreateDialog() {
+  editingTaskId = null;
+  dialogTitleEl.textContent = 'Новая задача';
+  formEl.reset();
+  clearFormError();
+  dialogEl.showModal();
+  titleInputEl.focus();
+}
 
+function openEditDialog(taskId) {
+  const task = tasks.find((t) => t.id === taskId);
+  if (!task) return;
+
+  editingTaskId = taskId;
+  dialogTitleEl.textContent = 'Редактировать задачу';
+  formEl.reset();
+  clearFormError();
+  titleInputEl.value = task.title;
+  dialogEl.showModal();
+  titleInputEl.focus();
+  titleInputEl.select();
+}
+
+function closeDialog() {
+  dialogEl.close();
+}
+
+function clearFormError() {
+  formErrorEl.textContent = '';
+  titleInputEl.removeAttribute('aria-invalid');
+}
+
+function showFormError(message) {
+  formErrorEl.textContent = message;
+  titleInputEl.setAttribute('aria-invalid', 'true');
+  titleInputEl.focus();
+}
+
+function announce(message) {
+  if (!liveRegionEl) return;
+  liveRegionEl.textContent = '';
+  setTimeout(() => { liveRegionEl.textContent = message; }, 50);
+}
+
+function sortTasks() {
+  tasks.sort((a, b) => Number(a.done) - Number(b.done));
+}
+
+function isElementVisible(el) {
+  if (!el) return false;
+  return el.getClientRects().length > 0
+    && getComputedStyle(el).visibility !== 'hidden';
+}
+
+function applyFilter() {
+  const query = searchQuery.trim().toLowerCase();
+  const items = [...taskListEl.querySelectorAll('[data-task-id]')];
+
+  let visibleCount = 0;
+
+  for (const li of items) {
+    const task = tasks.find((t) => t.id === li.dataset.taskId);
+    if (!task) continue;
+
+    const matches = query === '' || task.title.toLowerCase().includes(query);
+    li.hidden = !matches;
+    if (matches) visibleCount++;
+  }
+
+  const noResults = items.length > 0 && visibleCount === 0;
+  emptyMessageEl.hidden = !(tasks.length === 0 || noResults);
+  if (noResults) {
+    emptyMessageEl.textContent = 'Ничего не найдено по запросу «' + searchQuery + '».';
+  } else if (tasks.length === 0) {
+    emptyMessageEl.textContent = 'Задач пока нет. Добавьте первую!';
+  }
+}
+
+function deleteTask(li) {
+  const id = li?.dataset.taskId;
+  if (!id) return;
+
+  const task = tasks.find((t) => t.id === id);
+  const title = task ? task.title : '';
+
+  const allItems = [...taskListEl.querySelectorAll('[data-task-id]')];
+  const visibleItems = allItems.filter(isElementVisible);
+  const index = visibleItems.indexOf(li);
+
+  const nextItem =
+    visibleItems.slice(index + 1).find(isElementVisible) ??
+    visibleItems.slice(0, index).reverse().find(isElementVisible) ??
+    null;
+
+  tasks = tasks.filter((t) => t.id !== id);
+  saveTasks(tasks);
+
+  const nextId = nextItem?.dataset.taskId ?? null;
+  renderTasks();
+
+  if (nextId) {
+    const restored = taskListEl.querySelector(`[data-task-id="${nextId}"]`);
+    const focusTarget = restored?.querySelector('.js-toggle-done')
+      ?? restored?.querySelector('button');
+    focusTarget?.focus();
+  } else {
+    addButtonEl.focus();
+  }
+
+  announce('Задача удалена: ' + title);
+}
+
+addButtonEl.addEventListener('click', openCreateDialog);
+
+cancelBtnEl.addEventListener('click', closeDialog);
+
+formEl.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const raw = titleInputEl.value.trim();
+
+  if (raw.length < 2) {
+    showFormError('Название должно быть не короче 2 символов.');
+    return;
+  }
+  clearFormError();
+
+  if (editingTaskId === null) {
+    tasks.push({
+      id: generateId(),
+      title: raw,
+      done: false,
+    });
+    saveTasks(tasks);
+    renderTasks();
+    announce('Задача добавлена: ' + raw);
+  } else {
+    const t = tasks.find((x) => x.id === editingTaskId);
+    if (t) {
+      t.title = raw;
+      saveTasks(tasks);
+      renderTasks();
+      announce('Задача изменена: ' + raw);
+    }
+  }
+
+  dialogEl.close();
+});
+
+taskListEl.addEventListener('change', (event) => {
+  const checkbox = event.target.closest('.js-toggle-done');
+  if (!checkbox) return;
+
+  const li = checkbox.closest('[data-task-id]');
+  const id = li?.dataset.taskId;
+  const task = tasks.find((t) => t.id === id);
+  if (!task) return;
+
+  task.done = checkbox.checked;
+  sortTasks();
+  saveTasks(tasks);
+  renderTasks();
+  announce(task.done ? 'Задача выполнена: ' + task.title : 'Задача возвращена в работу: ' + task.title);
+});
+
+taskListEl.addEventListener('click', (event) => {
+  const deleteBtn = event.target.closest('.js-delete-task');
+  if (deleteBtn) {
+    const li = deleteBtn.closest('[data-task-id]');
+    if (li) deleteTask(li);
+    return;
+  }
+
+  const editBtn = event.target.closest('.js-edit-task');
+  if (editBtn) {
+    const li = editBtn.closest('[data-task-id]');
+    const id = li?.dataset.taskId;
+    if (id) openEditDialog(id);
+  }
+});
+
+searchInputEl.addEventListener('input', () => {
+  searchQuery = searchInputEl.value;
+  applyFilter();
+});
+
+sortTasks();
 renderTasks();
 console.log('Загружено задач:', tasks.length, tasks);
