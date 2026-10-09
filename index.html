@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="To-Do List на Tailwind CSS — лабораторная работа №4">
+  <title>To-Do List</title>
+  <link rel="stylesheet" href="dist/css/main.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body class="min-h-screen bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-200 transition-colors">
+
+  <header class="sticky top-0 z-50 bg-teal-700 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
+    <div class="max-w-3xl mx-auto px-5 flex items-center justify-between min-h-16">
+      <h1 class="text-2xl font-bold m-0 text-white dark:text-sky-500">Мои задачи</h1>
+
+      <button
+        type="button"
+        class="js-theme-toggle w-10 h-10 flex items-center justify-center rounded-full border-2 border-[#505050] bg-white text-black dark:border-slate-600 dark:bg-slate-800 dark:text-sky-500 cursor-pointer transition-transform hover:rotate-12 hover:scale-105 hover:border-teal-700 hover:text-teal-700 dark:hover:border-sky-500 dark:hover:text-sky-500 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
+        aria-label="Переключить на тёмную тему">
+        <svg class="block dark:hidden shrink-0 pointer-events-none"
+             aria-hidden="true" focusable="false"
+             width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="hidden dark:block shrink-0 pointer-events-none"
+             aria-hidden="true" focusable="false"
+             width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="py-8 pb-16">
+    <div class="max-w-3xl mx-auto px-5">
+
+      <section class="flex flex-col sm:flex-row gap-3 mb-6" aria-label="Панель управления задачами">
+        <div class="flex-1 relative">
+          <label for="search" class="sr-only">Поиск задач</label>
+          <input
+            type="search"
+            id="search"
+            class="js-search w-full px-4 py-2.5 border-2 border-slate-200 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-teal-700 dark:focus:border-sky-400 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-300 transition-colors"
+            placeholder="Найти задачу..."
+            autocomplete="off">
+        </div>
+
+        <button
+          type="button"
+          class="js-add-task inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-white bg-teal-700 hover:bg-teal-800 dark:bg-sky-500 dark:hover:bg-sky-600 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-300 transition-colors cursor-pointer border-0 sm:w-auto w-full">
+          + Добавить задачу
+        </button>
+      </section>
+
+      <section aria-labelledby="tasks-heading">
+        <h2 id="tasks-heading" class="sr-only">Список задач</h2>
+
+        <ul class="js-task-list flex flex-col gap-2.5 list-none p-0 m-0" id="task-list"></ul>
+
+        <p class="js-empty-message text-center text-slate-500 dark:text-slate-400 py-10 text-sm" hidden>
+          Задач пока нет. Добавьте первую!
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <dialog
+    class="js-task-dialog w-full max-w-md p-0 rounded-2xl border-0 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-2xl backdrop:bg-slate-900/55 backdrop:backdrop-blur-sm m-auto max-h-[calc(100vh-40px)] overflow-auto"
+    aria-labelledby="task-dialog-title">
+
+    <form method="dialog" class="js-task-form flex flex-col p-6" novalidate>
+      <h2 id="task-dialog-title" class="text-xl font-bold mb-4 m-0">Новая задача</h2>
+
+      <div class="flex flex-col gap-1.5 mb-5">
+        <label for="task-title" class="text-sm font-semibold">Название задачи</label>
+        <input
+          type="text"
+          id="task-title"
+          name="title"
+          class="w-full px-4 py-2.5 border-2 border-slate-200 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-teal-700 dark:focus:border-sky-400 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-300 aria-[invalid=true]:border-red-600 transition-colors"
+          required
+          maxlength="200"
+          autocomplete="off"
+          autofocus>
+        <span class="js-form-error min-h-5 text-sm text-red-600 dark:text-red-400" role="alert"></span>
+      </div>
+
+      <div class="flex justify-end gap-2.5 flex-col-reverse sm:flex-row">
+        <button
+          type="button"
+          class="js-cancel-dialog inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-teal-700 dark:text-sky-400 border-2 border-teal-700 dark:border-sky-400 hover:bg-teal-700 hover:text-white dark:hover:bg-sky-400 dark:hover:text-slate-900 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-300 transition-colors cursor-pointer bg-transparent">
+          Отмена
+        </button>
+        <button
+          type="submit"
+          class="js-submit-task inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-white bg-teal-700 hover:bg-teal-800 dark:bg-sky-500 dark:hover:bg-sky-600 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-300 transition-colors cursor-pointer border-0">
+          Сохранить
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="sr-only js-live-region" role="status" aria-live="polite"></div>
+
+</body>
+</html>
