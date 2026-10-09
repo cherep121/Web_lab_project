@@ -4,78 +4,47 @@
   📌 ${\color{#FF69B4}Тема: \ Препроцессоры \ и \ верстка}$
 
 ## 🛠 Стек
-- **HTML5** — семантическая разметка
-- **SCSS (Sass)** — модульная архитектура стилей
-- **JavaScript (jQuery)** — интерактив: карусель, модальное окно, форма
+- **HTML5** — семантическая разметка (`<main>`, `<section>`, `<ul>`, `<dialog>`)
+- **Tailwind CSS v4** — утилитарная стилизация, подключение через `@tailwindcss/cli`
+- **JavaScript (vanilla)** — логика приложения: список задач, поиск, модальное окно, темы, `localStorage`
 - **Node.js / npm** — сборка проекта
-- **БЭМ** — методология именования классов
-- **Git**
+- **CSS custom properties** — для светлой и тёмной тем
+- **Git** — контроль версий
+
 
 ## 📁 Структура
 ```
-Web_lab/
-├─ index.html
-├─ scss/ <-- исходники стилей
-│ ├─ utils/ <-- переменные, функции, миксины
-│ │ ├─ _variables.scss
-│ │ ├─ _functions.scss
-│ │ ├─ _mixins.scss
-│ │ └─ _index.scss
-│ ├─ base/ <-- reset и типографика
-│ │ ├─ _reset.scss
-│ │ ├─ _typography.scss
-│ │ └─ _index.scss
-│ ├─ layout/ <-- каркас страницы
-│ │ ├─ _header.scss
-│ │ ├─ _hero.scss
-│ │ ├─ _sections.scss
-│ │ ├─ _footer.scss
-│ │ └─ _index.scss
-│ ├─ components/ <-- переиспользуемые компоненты
-│ │ ├─ _button.scss
-│ │ ├─ _card.scss
-│ │ ├─ _modal.scss
-│ │ ├─ _form.scss
-│ │ ├─ _carousel.scss
-│ │ ├─ _scroll-top.scss
-│ │ └─ _index.scss
-│ ├─ themes/ <-- светлая и тёмная темы
-│ │ ├─ _light.scss
-│ │ ├─ _dark.scss
-│ │ └─ _index.scss
-│ └─ main.scss <-- точка входа
-├─ dist/ <-- собранный CSS (генерируется)
+Web-lab-project/
+├─ index.html <-- разметка с утилитами Tailwind
+├─ src/
+│ └─ input.css <-- точка входа Tailwind
+│ (@import "tailwindcss"; + @custom-variant dark
+│ + @layer components для .task и .button-icon)
+├─ dist/ <-- собранный CSS (в .gitignore)
 │ └─ css/
 │ └─ main.css
 ├─ js/
-│ └─ script.js <-- динамика на jQuery
-├─ data/
-│ └─ portfolio.json <-- данные для галереи
-├─ images/
-│ ├─ avatar.png
-│ ├─ image.png
-│ ├─ image2.png
-│ ├─ image3.png
-│ └─ image4.png
+│ └─ main.js <-- вся логика приложения (перенесена из lab-4)
 ├─ node_modules/ <-- зависимости (в .gitignore)
-├─ package.json <-- скрипты и зависимости
-├─ package-lock.json
-├─ README.md
-└─ .gitignore
+├─ package.json <-- скрипты сборки и зависимости
+├─ package-lock.json <-- зафиксированные версии зависимостей
+├─ README.md <-- этот файл
+└─ .gitignore <-- node_modules/, dist/, .DS_Store
 ```
 **Описание:**
-- `index.html` — основная страница-визитка
-- `scss/` — исходники стилей на препроцессоре Sass
-  - `utils/` — переменные, функции, миксины
-  - `base/` — сброс стилей и типографика
-  - `layout/` — крупные блоки страницы (хедер, hero, футер)
-  - `components/` — переиспользуемые компоненты (кнопка, карточка, модалка)
-  - `themes/` — генерация CSS-переменных для светлой и тёмной темы
-  - `main.scss` — точка входа, собирает все модули
+- `index.html` — страница приложения To-Do List
 - `dist/css/main.css` — собранный CSS (генерируется командой `npm run build`)
-- `js/script.js` — весь JS-код на jQuery (меню, галерея, форма, карусель, подсветка меню, кнопка «Вверх», переключатель темы)
-- `data/portfolio.json` — данные о работах для динамической галереи
-- `images/` — аватар и скриншоты проектов
+- `js/main.js` — вся логика приложения: список задач, добавление через модалку, редактирование, удаление, поиск, отметка «выполнено», переключение темы, сохранение в `localStorage`
+- `src/input.css` — входной файл Tailwind:
+  - `@import "tailwindcss";` — подключение Tailwind;
+  - `@source "../js/**/*.js"; @source "../index.html";` — явное указание,
+    где искать использованные классы (важно: `sr-only` и другие утилиты
+    задаются в JS динамически);
+  - `@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));` —
+    тёмная тема через атрибут `data-theme`, а не по системной настройке;
+  - `@layer components { … }` — классы `.task`, `.task__*`, `.button-icon`
+    через `@apply` (единственное место с «собственными» стилями —
+    обоснованно: эти классы создаются из JS динамически).
 - `package.json` — скрипты сборки (`sass:dev`, `build`) и зависимости
 - `README.md` — документация проекта
 - `.gitignore` — исключения для Git (`node_modules/`, `dist/`)
