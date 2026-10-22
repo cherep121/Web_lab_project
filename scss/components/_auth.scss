@@ -1,0 +1,64 @@
+@use '../utils' as *;
+
+.auth-card {
+  padding: clamp(24px, 6vw, 42px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  box-shadow: var(--shadow);
+
+  h1 {
+    margin-bottom: 8px;
+    font-size: clamp(rem(28px), 6vw, rem(38px));
+  }
+
+  &__lead {
+    margin-bottom: 26px;
+    color: var(--color-text-muted);
+  }
+
+  &__footer {
+    margin: 22px 0 8px;
+    text-align: center;
+
+    a {
+      color: var(--color-accent);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+
+  &__warning {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: rem(13px);
+    text-align: center;
+  }
+}
+
+.eyebrow {
+  margin-bottom: 6px;
+  color: var(--color-accent);
+  font-size: rem(12px);
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.notice {
+  margin-bottom: 20px;
+  padding: 11px 13px;
+  border-radius: var(--radius-sm);
+  font-size: rem(14px);
+
+  &--success {
+    color: var(--color-success-text);
+    background: var(--color-success-bg);
+  }
+
+  &--error {
+    color: var(--color-danger);
+    background: var(--color-error-bg);
+  }
+}

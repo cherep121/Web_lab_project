@@ -40,6 +40,17 @@
     }
   }
 
+  &--header {
+    padding: rem(8px) rem(13px);
+    border-color: currentColor;
+    color: var(--color-text);
+  }
+
+  &--wide {
+    width: 100%;
+    min-height: 44px;
+  }
+
   &:active:not(:disabled) {
     transform: translateY(0);
   }
@@ -54,5 +65,13 @@
   &:focus-visible {
     outline: 3px solid var(--color-accent-soft);
     outline-offset: 2px;
+  }
+}
+
+:root:not([data-theme='dark']) .button--header {
+  color: #fff;
+
+  &:hover {
+    background: rgba(255, 255, 255, .14);
   }
 }
