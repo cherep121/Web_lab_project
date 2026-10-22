@@ -1,8 +1,8 @@
 {
-  "name": "todo-vue-lab-6",
+  "name": "taskspace-vue-lab-7",
   "version": "1.0.0",
   "private": true,
-  "description": "To-Do List на Vue 3 и Vite — лабораторная работа №6",
+  "description": "TaskSpace на Vue 3 с Pinia, Vue Router и учебной авторизацией — лабораторная работа №7",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,7 +12,10 @@
   "author": "Чистюхин Антон",
   "license": "ISC",
   "dependencies": {
-    "vue": "^3.5.44"
+    "pinia": "^4.1.0",
+    "pinia-plugin-persistedstate": "^4.7.1",
+    "vue": "^3.5.44",
+    "vue-router": "^5.4.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.10",
