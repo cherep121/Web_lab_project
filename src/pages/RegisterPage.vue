@@ -20,10 +20,20 @@ function clearErrors() {
 
 function validate() {
   clearErrors()
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+  const cyrillicPattern = /[\u0400-\u04ff]/
 
-  if (!emailPattern.test(form.email.trim())) errors.email = 'Введите email в формате name@example.com.'
-  if (form.password.length < 6) errors.password = 'Пароль должен содержать не менее 6 символов.'
+  if (cyrillicPattern.test(form.email)) {
+    errors.email = 'Email не должен содержать русские буквы.'
+  } else if (!emailPattern.test(form.email.trim())) {
+    errors.email = 'Введите email латинскими буквами в формате name@example.com.'
+  }
+
+  if (cyrillicPattern.test(form.password)) {
+    errors.password = 'Пароль не должен содержать русские буквы.'
+  } else if (form.password.length < 6) {
+    errors.password = 'Пароль должен содержать не менее 6 символов.'
+  }
   if (form.passwordConfirm !== form.password) errors.passwordConfirm = 'Пароли не совпадают.'
 
   return !errors.email && !errors.password && !errors.passwordConfirm
@@ -34,9 +44,9 @@ async function submit() {
 
   const result = userStore.register(form.email, form.password)
   if (!result.ok) {
-    errors.email = result.message
+    errors[result.field ?? 'common'] = result.message
     await nextTick()
-    emailInput.value?.focus()
+    if (result.field === 'email') emailInput.value?.focus()
     return
   }
 
