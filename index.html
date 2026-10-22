@@ -210,6 +210,116 @@
       font-weight: 700;
     }
 
+    .task-four__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .task-four__header h2 {
+      margin-bottom: 7px;
+    }
+
+    .task-four__intro {
+      max-width: 520px;
+      margin: 0;
+      color: #6b7280;
+      line-height: 1.55;
+    }
+
+    .task-four__badge {
+      flex-shrink: 0;
+      padding: 7px 11px;
+      border: 1px solid #a7f3d0;
+      border-radius: 999px;
+      background: #ecfdf5;
+      color: #047857;
+      font-size: 0.8rem;
+      font-weight: 750;
+      letter-spacing: 0.02em;
+    }
+
+    .task-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 0;
+    }
+
+    .task-list .task-list__item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 112px;
+      margin: 0;
+      padding: 18px;
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--item-accent) 24%, white);
+      border-radius: 14px;
+      background: linear-gradient(135deg, white 30%, var(--item-soft) 100%);
+      box-shadow: 0 6px 18px rgba(31, 41, 55, 0.07);
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .task-list .task-list__item::after {
+      content: '';
+      position: absolute;
+      right: -24px;
+      bottom: -34px;
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: var(--item-accent);
+      opacity: 0.07;
+    }
+
+    .task-list .task-list__item:hover {
+      z-index: 1;
+      border-color: var(--item-accent);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(31, 41, 55, 0.12);
+    }
+
+    .task-list .item-number {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      flex: 0 0 46px;
+      width: 46px;
+      height: 46px;
+      min-width: 46px;
+      place-items: center;
+      border-radius: 13px;
+      background: var(--item-accent);
+      color: white;
+      font-size: 1.05rem;
+      box-shadow: 0 7px 14px color-mix(in srgb, var(--item-accent) 25%, transparent);
+    }
+
+    .task-list__content {
+      position: relative;
+      z-index: 1;
+      min-width: 0;
+    }
+
+    .task-list__title {
+      display: block;
+      color: #1f2937;
+      font-size: 1rem;
+      line-height: 1.35;
+    }
+
+    .task-list__caption {
+      display: block;
+      margin-top: 5px;
+      color: #6b7280;
+      font-size: 0.86rem;
+      line-height: 1.4;
+    }
+
     .clock {
       margin-top: 20px;
       padding: 24px;
@@ -234,6 +344,19 @@
 
       .tabs button {
         flex: 1 1 120px;
+      }
+
+      .task-four__header {
+        display: block;
+      }
+
+      .task-four__badge {
+        display: inline-block;
+        margin-top: 14px;
+      }
+
+      .task-list {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -340,20 +463,59 @@
   const Task4 = defineComponent({
     setup() {
       const subjects = ref([
-        { id: 1, title: 'Изучить реактивность Vue' },
-        { id: 2, title: 'Разобраться с директивами' },
-        { id: 3, title: 'Создать первый компонент' },
-        { id: 4, title: 'Проверить работу приложения' }
+        {
+          id: 1,
+          title: 'Изучить реактивность Vue',
+          caption: 'Понять, как данные автоматически обновляют интерфейс',
+          accent: '#059669',
+          soft: '#ecfdf5'
+        },
+        {
+          id: 2,
+          title: 'Разобраться с директивами',
+          caption: 'Использовать v-model, v-if и v-for на практике',
+          accent: '#0284c7',
+          soft: '#eff6ff'
+        },
+        {
+          id: 3,
+          title: 'Создать первый компонент',
+          caption: 'Разделить интерфейс на самостоятельные блоки',
+          accent: '#7c3aed',
+          soft: '#f5f3ff'
+        },
+        {
+          id: 4,
+          title: 'Проверить работу приложения',
+          caption: 'Убедиться, что все действия работают корректно',
+          accent: '#ea580c',
+          soft: '#fff7ed'
+        }
       ])
 
       return { subjects }
     },
     template: `
-      <section>
-        <h2>Задание 4. Список элементов</h2>
-        <ol class="items-list">
-          <li v-for="(subject, index) in subjects" :key="subject.id">
-            <span class="item-number">{{ index + 1 }}.</span> {{ subject.title }}
+      <section class="task-four">
+        <div class="task-four__header">
+          <div>
+            <h2>Задание 4. Список элементов</h2>
+            <p class="task-four__intro">Небольшой маршрут знакомства с основными возможностями Vue 3.</p>
+          </div>
+          <span class="task-four__badge">4 шага</span>
+        </div>
+        <ol class="items-list task-list">
+          <li
+            v-for="(subject, index) in subjects"
+            :key="subject.id"
+            class="task-list__item"
+            :style="{ '--item-accent': subject.accent, '--item-soft': subject.soft }"
+          >
+            <span class="item-number">{{ index + 1 }}</span>
+            <span class="task-list__content">
+              <strong class="task-list__title">{{ subject.title }}</strong>
+              <small class="task-list__caption">{{ subject.caption }}</small>
+            </span>
           </li>
         </ol>
       </section>
