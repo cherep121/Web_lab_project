@@ -4,12 +4,14 @@ import AddTodoModal from './components/AddTodoModal.vue'
 import SearchBar from './components/SearchBar.vue'
 import ThemeToggle from './components/ThemeToggle.vue'
 import TodoList from './components/TodoList.vue'
+import { useStoredTasks } from './composables/useStoredTasks.js'
+import { useStoredTheme } from './composables/useStoredTheme.js'
 
-const tasks = ref([])
+const { tasks } = useStoredTasks()
+const { isDark } = useStoredTheme()
 const searchQuery = ref('')
 const editingTaskId = ref(null)
 const isModalOpen = ref(false)
-const isDark = ref(false)
 const liveMessage = ref('')
 const addButton = ref(null)
 
@@ -92,21 +94,27 @@ function toggleTask(taskId, done) {
   announce(done ? `Задача выполнена: ${task.title}` : `Задача возвращена в работу: ${task.title}`)
 }
 
-function deleteTask(taskId) {
+async function deleteTask(taskId) {
   const task = tasks.value.find((item) => item.id === taskId)
   if (!task) return
 
+  const visibleIds = visibleTasks.value.map((item) => item.id)
+  const currentIndex = visibleIds.indexOf(taskId)
+  const nextTaskId = visibleIds[currentIndex + 1] ?? visibleIds[currentIndex - 1] ?? null
+
   tasks.value = tasks.value.filter((item) => item.id !== taskId)
   announce(`Задача удалена: ${task.title}`)
+
+  await nextTick()
+  if (nextTaskId) {
+    document.querySelector(`[data-task-id="${CSS.escape(nextTaskId)}"] .task__checkbox`)?.focus()
+  } else {
+    addButton.value?.focus()
+  }
 }
 
 function toggleTheme() {
   isDark.value = !isDark.value
-  if (isDark.value) {
-    document.documentElement.setAttribute('data-theme', 'dark')
-  } else {
-    document.documentElement.removeAttribute('data-theme')
-  }
 }
 </script>
 
