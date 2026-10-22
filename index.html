@@ -71,10 +71,94 @@
 <script>
   const { createApp, ref, defineComponent } = Vue
 
+  // --- ЗАДАНИЕ 1: Options API, интерполяция и v-model ---
+  const Task1 = defineComponent({
+    data() {
+      return {
+        name: 'Антон'
+      }
+    },
+    template: `
+      <section>
+        <h2>Задание 1. Привет, Vue!</h2>
+        <label for="user-name">Введите имя:</label>
+        <input id="user-name" v-model="name" type="text" placeholder="Ваше имя">
+        <p class="result">Привет, {{ name || 'гость' }}!</p>
+      </section>
+    `
+  })
+
+  // --- ЗАДАНИЕ 2: ref и обработка событий ---
+  const Task2 = defineComponent({
+    setup() {
+      const count = ref(0)
+      const increment = () => {
+        count.value += 1
+      }
+
+      return { count, increment }
+    },
+    template: `
+      <section>
+        <h2>Задание 2. Реактивный счётчик</h2>
+        <p class="result">Текущее значение: <strong>{{ count }}</strong></p>
+        <button type="button" @click="increment">Увеличить счётчик</button>
+      </section>
+    `
+  })
+
+  // --- ЗАДАНИЕ 3: условный рендеринг ---
+  const Task3 = defineComponent({
+    setup() {
+      const isDescriptionVisible = ref(true)
+      const toggleDescription = () => {
+        isDescriptionVisible.value = !isDescriptionVisible.value
+      }
+
+      return { isDescriptionVisible, toggleDescription }
+    },
+    template: `
+      <section>
+        <h2>Задание 3. Условный рендеринг</h2>
+        <button type="button" @click="toggleDescription">
+          {{ isDescriptionVisible ? 'Скрыть описание' : 'Показать описание' }}
+        </button>
+        <p v-if="isDescriptionVisible" class="description">
+          Vue позволяет декларативно управлять отображением элементов с помощью директивы v-if.
+        </p>
+        <p v-else class="hint">Описание скрыто.</p>
+      </section>
+    `
+  })
+
+  // --- ЗАДАНИЕ 4: список и уникальные ключи ---
+  const Task4 = defineComponent({
+    setup() {
+      const subjects = ref([
+        { id: 1, title: 'Изучить реактивность Vue' },
+        { id: 2, title: 'Разобраться с директивами' },
+        { id: 3, title: 'Создать первый компонент' },
+        { id: 4, title: 'Проверить работу приложения' }
+      ])
+
+      return { subjects }
+    },
+    template: `
+      <section>
+        <h2>Задание 4. Список элементов</h2>
+        <ol class="items-list">
+          <li v-for="(subject, index) in subjects" :key="subject.id">
+            <span class="item-number">{{ index + 1 }}.</span> {{ subject.title }}
+          </li>
+        </ol>
+      </section>
+    `
+  })
+
   createApp({
     setup() {
       const currentTab = ref(0)
-      const tabs = []
+      const tabs = [Task1, Task2, Task3, Task4]
       return { currentTab, tabs }
     }
   }).mount('#app')
