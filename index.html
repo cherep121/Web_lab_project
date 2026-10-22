@@ -6,15 +6,42 @@
   <title>Лабораторная №5 — Введение в Vue</title>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <style>
-    body {
-      font-family: sans-serif;
-      background: #f5f5f5;
-      margin: 0;
-      padding: 20px;
+    * {
+      box-sizing: border-box;
     }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #1f2937;
+      background: linear-gradient(135deg, #ecfdf5 0%, #f5f5f5 48%, #eff6ff 100%);
+      margin: 0;
+      padding: 32px 20px;
+    }
+
+    #app {
+      width: min(820px, 100%);
+      margin: 0 auto;
+    }
+
     h1 {
       text-align: center;
+      margin: 0 0 8px;
+      color: #064e3b;
+      font-size: clamp(1.75rem, 5vw, 2.5rem);
     }
+
+    .subtitle {
+      margin: 0 0 28px;
+      text-align: center;
+      color: #4b5563;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #065f46;
+    }
+
     .tabs {
       display: flex;
       flex-wrap: wrap;
@@ -23,40 +50,143 @@
       margin-bottom: 20px;
     }
     button {
-      padding: 10px 15px;
-      border: none;
-      background: #ddd;
-      border-radius: 5px;
+      padding: 10px 16px;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      color: #1f2937;
+      border-radius: 8px;
       cursor: pointer;
+      font: inherit;
+      transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
     }
+
+    button:hover {
+      background: #d1fae5;
+      transform: translateY(-1px);
+    }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid rgba(59, 130, 246, 0.35);
+      outline-offset: 2px;
+    }
+
     button.active {
-      background: #42b883;
+      border-color: #047857;
+      background: #047857;
       color: white;
     }
+
     .task {
       background: white;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border: 1px solid rgba(209, 213, 219, 0.8);
+      border-radius: 16px;
+      padding: clamp(20px, 5vw, 36px);
+      box-shadow: 0 14px 40px rgba(31, 41, 55, 0.1);
     }
-    input, button {
-      margin-top: 8px;
-      padding: 6px;
+
+    label {
+      display: block;
+      margin-top: 14px;
+      font-weight: 600;
     }
+
+    input {
+      width: min(100%, 420px);
+      margin-top: 7px;
+      padding: 10px 12px;
+      border: 1px solid #9ca3af;
+      border-radius: 8px;
+      font: inherit;
+    }
+
+    form button,
+    section > button {
+      margin-top: 16px;
+    }
+
     ul {
       padding-left: 20px;
+    }
+
+    .result,
+    .description,
+    .hint {
+      margin: 18px 0 0;
+      padding: 14px 16px;
+      border-left: 4px solid #10b981;
+      border-radius: 6px;
+      background: #ecfdf5;
+    }
+
+    .hint {
+      border-left-color: #9ca3af;
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    .items-list,
+    .people-list {
+      margin: 20px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .items-list li,
+    .people-list li {
+      margin-top: 8px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #f3f4f6;
+    }
+
+    .item-number {
+      display: inline-block;
+      min-width: 28px;
+      color: #047857;
+      font-weight: 700;
+    }
+
+    .clock {
+      margin-top: 20px;
+      padding: 24px;
+      border-radius: 12px;
+      background: #064e3b;
+      color: white;
+      text-align: center;
+    }
+
+    .clock-time {
+      display: block;
+      margin-top: 8px;
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 540px) {
+      body {
+        padding: 22px 12px;
+      }
+
+      .tabs button {
+        flex: 1 1 120px;
+      }
     }
   </style>
 </head>
 <body>
 <div id="app">
   <h1>Лабораторная №5 — Введение в Vue</h1>
+  <p class="subtitle">Семь практических заданий на Vue 3</p>
 
-  <div class="tabs">
+  <div class="tabs" role="tablist" aria-label="Задания лабораторной работы">
     <button
       v-for="(tab, i) in tabs"
       :key="i"
       :class="{ active: currentTab === i }"
+      :aria-selected="currentTab === i"
+      role="tab"
       @click="currentTab = i"
     >
       Задание {{ i + 1 }}
@@ -69,7 +199,15 @@
 </div>
 
 <script>
-  const { createApp, ref, defineComponent } = Vue
+  const {
+    createApp,
+    ref,
+    computed,
+    watch,
+    onMounted,
+    onUnmounted,
+    defineComponent
+  } = Vue
 
   // --- ЗАДАНИЕ 1: Options API, интерполяция и v-model ---
   const Task1 = defineComponent({
@@ -155,10 +293,145 @@
     `
   })
 
+  // --- ЗАДАНИЕ 5: форма и работа с массивом ---
+  const Task5 = defineComponent({
+    setup() {
+      const personName = ref('')
+      const personAge = ref('')
+      const people = ref([])
+      let nextId = 1
+
+      const addPerson = () => {
+        const normalizedName = personName.value.trim()
+        const normalizedAge = Number(personAge.value)
+
+        if (!normalizedName || !Number.isFinite(normalizedAge) || normalizedAge < 1) {
+          return
+        }
+
+        people.value.push({
+          id: nextId,
+          name: normalizedName,
+          age: normalizedAge
+        })
+        nextId += 1
+        personName.value = ''
+        personAge.value = ''
+      }
+
+      return { personName, personAge, people, addPerson }
+    },
+    template: `
+      <section>
+        <h2>Задание 5. Мини-форма</h2>
+        <form @submit.prevent="addPerson">
+          <label for="person-name">Имя</label>
+          <input
+            id="person-name"
+            v-model="personName"
+            type="text"
+            placeholder="Например, Анна"
+            required
+          >
+
+          <label for="person-age">Возраст</label>
+          <input
+            id="person-age"
+            v-model.number="personAge"
+            type="number"
+            min="1"
+            max="130"
+            placeholder="Например, 20"
+            required
+          >
+
+          <button type="submit">Добавить</button>
+        </form>
+
+        <p v-if="people.length === 0" class="hint">Список пока пуст.</p>
+        <ul v-else class="people-list" aria-live="polite">
+          <li v-for="person in people" :key="person.id">
+            <strong>{{ person.name }}</strong> — {{ person.age }} лет
+          </li>
+        </ul>
+      </section>
+    `
+  })
+
+  // --- ЗАДАНИЕ 6: вычисляемые свойства ---
+  const Task6 = defineComponent({
+    setup() {
+      const number = ref(2)
+      const square = computed(() => Number(number.value) ** 2)
+      const cube = computed(() => Number(number.value) ** 3)
+
+      return { number, square, cube }
+    },
+    template: `
+      <section>
+        <h2>Задание 6. Вычисляемые свойства</h2>
+        <label for="calculation-number">Введите число:</label>
+        <input id="calculation-number" v-model.number="number" type="number" step="any">
+
+        <div class="result" aria-live="polite">
+          <p>Число: <strong>{{ number }}</strong></p>
+          <p>Квадрат: <strong>{{ square }}</strong></p>
+          <p>Куб: <strong>{{ cube }}</strong></p>
+        </div>
+      </section>
+    `
+  })
+
+  // --- ЗАДАНИЕ 7: watch и жизненный цикл ---
+  const Task7 = defineComponent({
+    setup() {
+      const currentTime = ref(new Date())
+      let timerId = null
+
+      const formattedTime = computed(() => currentTime.value.toLocaleTimeString('ru-RU'))
+      const greeting = computed(() => {
+        const hour = currentTime.value.getHours()
+
+        if (hour >= 5 && hour < 12) return 'Доброе утро!'
+        if (hour >= 12 && hour < 18) return 'Добрый день!'
+        if (hour >= 18 && hour < 23) return 'Добрый вечер!'
+        return 'Доброй ночи!'
+      })
+
+      watch(currentTime, (newTime, oldTime) => {
+        console.log(
+          `[Watch] Время изменилось: ${oldTime.toLocaleTimeString('ru-RU')} → ${newTime.toLocaleTimeString('ru-RU')}`
+        )
+      })
+
+      onMounted(() => {
+        timerId = window.setInterval(() => {
+          currentTime.value = new Date()
+        }, 1000)
+      })
+
+      onUnmounted(() => {
+        window.clearInterval(timerId)
+      })
+
+      return { formattedTime, greeting }
+    },
+    template: `
+      <section>
+        <h2>Задание 7. Watch и жизненный цикл</h2>
+        <div class="clock" aria-live="polite">
+          <strong>{{ greeting }}</strong>
+          <time class="clock-time">{{ formattedTime }}</time>
+        </div>
+        <p class="hint">Откройте консоль браузера: watch сообщает о каждом обновлении времени.</p>
+      </section>
+    `
+  })
+
   createApp({
     setup() {
       const currentTab = ref(0)
-      const tabs = [Task1, Task2, Task3, Task4]
+      const tabs = [Task1, Task2, Task3, Task4, Task5, Task6, Task7]
       return { currentTab, tabs }
     }
   }).mount('#app')
