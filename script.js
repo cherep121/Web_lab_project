@@ -1,31 +1,35 @@
 const PUZZLES = {
   cpp: [
-    { answer: 'УМНЫЙ УКАЗАТЕЛЬ', clue: 'Объект C++, который помогает автоматически управлять динамической памятью.' },
-    { answer: 'КОМПИЛЯТОР', clue: 'Программа, превращающая исходный код в исполняемый файл.' },
-    { answer: 'ПЕРЕГРУЗКА', clue: 'Возможность использовать одно имя функции для разных наборов параметров.' },
-    { answer: 'ШАБЛОН', clue: 'Механизм C++, позволяющий писать обобщённый код для разных типов.' },
-    { answer: 'КОНСТРУКТОР', clue: 'Метод класса, который вызывается при создании объекта.' }
+    { answer: 'КОМПИЛЯТОР', clue: 'Программа, превращающая исходный код в исполняемый файл.', difficulty: 'easy' },
+    { answer: 'КЛАСС', clue: 'Шаблон, по которому создаются объекты в C++.', difficulty: 'easy' },
+    { answer: 'УМНЫЙ УКАЗАТЕЛЬ', clue: 'Объект C++, который помогает автоматически управлять динамической памятью.', difficulty: 'medium' },
+    { answer: 'КОНСТРУКТОР', clue: 'Метод класса, который вызывается при создании объекта.', difficulty: 'medium' },
+    { answer: 'ПЕРЕГРУЗКА ОПЕРАТОРА', clue: 'Способ задать собственное поведение плюса, сравнения или другого знака для класса.', difficulty: 'hard' },
+    { answer: 'ВИРТУАЛЬНЫЙ ДЕСТРУКТОР', clue: 'Он нужен базовому классу для правильного удаления объектов наследников.', difficulty: 'hard' }
   ],
   web: [
-    { answer: 'КАСКАДНЫЕ СТИЛИ', clue: 'Именно они отвечают за цвет, отступы и расположение элементов на странице.' },
-    { answer: 'БРАУЗЕР', clue: 'Программа, которая читает HTML, CSS и JavaScript и показывает сайт.' },
-    { answer: 'АДРЕСНАЯ СТРОКА', clue: 'Место, куда пользователь вводит URL сайта.' },
-    { answer: 'СЕРВЕР', clue: 'Компьютер или программа, которая отвечает на запросы клиента.' },
-    { answer: 'ДОМ ДЕРЕВО', clue: 'Структура объектов, в которую браузер превращает HTML-документ.' }
+    { answer: 'БРАУЗЕР', clue: 'Программа, которая читает HTML, CSS и JavaScript и показывает сайт.', difficulty: 'easy' },
+    { answer: 'СЕРВЕР', clue: 'Компьютер или программа, которая отвечает на запросы клиента.', difficulty: 'easy' },
+    { answer: 'КАСКАДНЫЕ СТИЛИ', clue: 'Именно они отвечают за цвет, отступы и расположение элементов на странице.', difficulty: 'medium' },
+    { answer: 'АДРЕСНАЯ СТРОКА', clue: 'Место, куда пользователь вводит URL сайта.', difficulty: 'medium' },
+    { answer: 'ОБЪЕКТНАЯ МОДЕЛЬ', clue: 'Представление HTML-документа как дерева программных объектов.', difficulty: 'hard' },
+    { answer: 'АСИНХРОННЫЙ ЗАПРОС', clue: 'Обращение к серверу, во время которого страница продолжает работать.', difficulty: 'hard' }
   ],
   git: [
-    { answer: 'КОММИТ', clue: 'Сохранённый снимок изменений с коротким сообщением.' },
-    { answer: 'ВЕТКА', clue: 'Независимая линия разработки в репозитории.' },
-    { answer: 'КОНФЛИКТ', clue: 'Ситуация, когда Git не может сам объединить изменения.' },
-    { answer: 'РЕПОЗИТОРИЙ', clue: 'Хранилище проекта вместе со всей историей изменений.' },
-    { answer: 'СЛИЯНИЕ', clue: 'Операция объединения двух веток в одну.' }
+    { answer: 'КОММИТ', clue: 'Сохранённый снимок изменений с коротким сообщением.', difficulty: 'easy' },
+    { answer: 'ВЕТКА', clue: 'Независимая линия разработки в репозитории.', difficulty: 'easy' },
+    { answer: 'РЕПОЗИТОРИЙ', clue: 'Хранилище проекта вместе со всей историей изменений.', difficulty: 'medium' },
+    { answer: 'КОНФЛИКТ СЛИЯНИЯ', clue: 'Ситуация, когда Git не может сам объединить изменения.', difficulty: 'medium' },
+    { answer: 'ИНТЕРАКТИВНЫЙ РЕБЕЙЗ', clue: 'Команда для перестановки, объединения и изменения нескольких коммитов.', difficulty: 'hard' },
+    { answer: 'ОТЛОЖЕННЫЕ ИЗМЕНЕНИЯ', clue: 'Временное хранилище незавершённой работы перед переключением ветки.', difficulty: 'hard' }
   ],
   it: [
-    { answer: 'ТЁМНАЯ ТЕМА', clue: 'Режим интерфейса, который программист включает даже солнечным днём.' },
-    { answer: 'ЧИСТЫЙ КОД', clue: 'Код, который легко читать не только автору через две недели.' },
-    { answer: 'ДЕДЛАЙН', clue: 'Дата, после которой задача внезапно становится очень интересной.' },
-    { answer: 'КОФЕ МАШИНА', clue: 'Главный сервер бодрости в офисе разработчиков.' },
-    { answer: 'БАГ В ПРОДЕ', clue: 'Причина, по которой пятница вечером перестаёт быть пятницей.' }
+    { answer: 'ДЕДЛАЙН', clue: 'Дата, после которой задача внезапно становится очень интересной.', difficulty: 'easy' },
+    { answer: 'ТЁМНАЯ ТЕМА', clue: 'Режим интерфейса, который программист включает даже солнечным днём.', difficulty: 'easy' },
+    { answer: 'ЧИСТЫЙ КОД', clue: 'Код, который легко читать не только автору через две недели.', difficulty: 'medium' },
+    { answer: 'КОФЕ МАШИНА', clue: 'Главный сервер бодрости разработчика.', difficulty: 'medium' },
+    { answer: 'ТЕХНИЧЕСКИЙ ДОЛГ', clue: 'Цена быстрых решений, которую проекту приходится платить позднее.', difficulty: 'hard' },
+    { answer: 'РЕЗИНОВАЯ УТКА', clue: 'Молчаливый помощник, которому объясняют код, чтобы найти ошибку.', difficulty: 'hard' }
   ]
 }
 
@@ -39,36 +43,16 @@ const WHEEL_SEGMENTS = [
   { label: 'БАНКРОТ', type: 'bankrupt' },
   { label: 'ПРИЗ', points: 1500, type: 'prize' }
 ]
+const WHEEL_WEIGHTS = [12, 14, 15, 18, 15, 10, 3, 13]
 
 const ALPHABET = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'
-const HOST_LINES = {
-  start: [
-    'Барабан заряжен. Главное — не назвать букву из JavaScript!',
-    'В студию! Компилятор молчит, значит играем.',
-    'Загадка есть, табло есть, бюджет на призы снова потерялся.'
-  ],
-  correct: [
-    'Есть такая буква! Отсыпьте игроку виртуальных очков.',
-    'Верно! Даже линтер не нашёл к чему придраться.',
-    'Открываем табло. Красиво, почти как код после форматтера!'
-  ],
-  wrong: [
-    'Такой буквы нет. Возможно, она ушла в другую ветку.',
-    'Мимо! Буква не прошла код-ревью.',
-    'Нет такой буквы. Но уверенность была уровня senior.'
-  ],
-  spin: [
-    'Барабан крутится, вентиляторы ноутбука тоже!',
-    'Сейчас узнаем, очки это или очередной exception.',
-    'Нажимаем F5... то есть вращаем барабан!'
-  ]
-}
 
 const elements = {
   setupScreen: document.querySelector('#setup-screen'),
   gameScreen: document.querySelector('#game-screen'),
   topicList: document.querySelector('#topic-list'),
   topicButtons: [...document.querySelectorAll('.topic-card')],
+  difficultyInputs: [...document.querySelectorAll('input[name="difficulty"]')],
   startPreset: document.querySelector('#start-preset'),
   customForm: document.querySelector('#custom-form'),
   customAnswer: document.querySelector('#custom-answer'),
@@ -79,7 +63,6 @@ const elements = {
   score: document.querySelector('#score-value'),
   mistakes: document.querySelector('#mistakes-value'),
   round: document.querySelector('#round-value'),
-  hostMessage: document.querySelector('#host-message'),
   clueToggle: document.querySelector('#clue-toggle'),
   clueCard: document.querySelector('#clue-card'),
   clueText: document.querySelector('#clue-text'),
@@ -107,9 +90,11 @@ const elements = {
 
 const state = {
   topic: 'cpp',
+  difficulty: 'easy',
   puzzle: null,
   source: 'preset',
   guessed: new Set(),
+  solvedWords: new Set(),
   score: 0,
   mistakes: 0,
   round: 1,
@@ -126,6 +111,18 @@ function randomItem(items) {
   return items[Math.floor(Math.random() * items.length)]
 }
 
+function pickWeightedSegmentIndex() {
+  const totalWeight = WHEEL_WEIGHTS.reduce((sum, weight) => sum + weight, 0)
+  let roll = Math.random() * totalWeight
+
+  for (let index = 0; index < WHEEL_WEIGHTS.length; index += 1) {
+    roll -= WHEEL_WEIGHTS[index]
+    if (roll < 0) return index
+  }
+
+  return WHEEL_WEIGHTS.length - 1
+}
+
 function normalizeText(value) {
   return value
     .toLocaleUpperCase('ru-RU')
@@ -135,10 +132,6 @@ function normalizeText(value) {
 
 function lettersOnly(value) {
   return value.replace(/[^А-ЯЁ]/giu, '')
-}
-
-function pickHostLine(group) {
-  elements.hostMessage.textContent = randomItem(HOST_LINES[group])
 }
 
 function setSound(enabled) {
@@ -230,6 +223,7 @@ function createBoard() {
       tile.className = `letter-tile${isRevealed ? ' is-revealed' : ''}${isLetter ? '' : ' is-symbol'}`
       tile.textContent = character
       tile.dataset.letter = character
+      tile.dataset.wordIndex = wordIndex
       tile.setAttribute('aria-label', isRevealed ? character : 'скрытая буква')
       wordElement.append(tile)
     })
@@ -247,11 +241,31 @@ function createBoard() {
 function updateBoard() {
   elements.wordBoard.querySelectorAll('.letter-tile[data-letter]').forEach((tile) => {
     const character = tile.dataset.letter
-    if (state.guessed.has(character)) {
+    const wordIsSolved = state.solvedWords.has(Number(tile.dataset.wordIndex))
+    if (state.guessed.has(character) || wordIsSolved) {
       tile.classList.add('is-revealed')
       tile.setAttribute('aria-label', character)
     }
   })
+}
+
+function getPuzzleWords() {
+  return state.puzzle.answer.split(' ')
+}
+
+function isWordSolved(index) {
+  if (state.solvedWords.has(index)) return true
+  return [...getPuzzleWords()[index]].every((character) => {
+    return !/[А-ЯЁ]/u.test(character) || state.guessed.has(character)
+  })
+}
+
+function isPuzzleSolved() {
+  return getPuzzleWords().every((word, index) => isWordSolved(index))
+}
+
+function getPresetPool() {
+  return PUZZLES[state.topic].filter((puzzle) => puzzle.difficulty === state.difficulty)
 }
 
 function updateScoreboard() {
@@ -316,6 +330,7 @@ function startGame(puzzle, source = 'preset') {
   }
   state.source = source
   state.guessed = new Set()
+  state.solvedWords = new Set()
   state.score = 0
   state.mistakes = 0
   state.spinValue = 0
@@ -329,7 +344,6 @@ function startGame(puzzle, source = 'preset') {
   resetKeyboard()
   createBoard()
   updateScoreboard()
-  pickHostLine('start')
   showScreen('game')
   startClueTimer()
   elements.spinButton.focus()
@@ -344,9 +358,7 @@ function spinWheel() {
   elements.spinButton.disabled = true
   elements.wheelResult.textContent = '...'
   elements.spinStatus.textContent = 'Колесо решает вашу судьбу...'
-  pickHostLine('spin')
-
-  const index = Math.floor(Math.random() * WHEEL_SEGMENTS.length)
+  const index = pickWeightedSegmentIndex()
   const extraTurns = 5 + Math.floor(Math.random() * 3)
   const targetOffset = 360 - index * 45
   const currentOffset = ((state.wheelRotation % 360) + 360) % 360
@@ -377,7 +389,6 @@ function resolveSpin(segment) {
     state.score = 0
     updateScoreboard()
     elements.spinStatus.textContent = 'Банкрот! Очки сгорели. Крутите ещё раз.'
-    elements.hostMessage.textContent = 'Ваши очки удалены без возможности восстановления. Почти как rm -rf.'
     soundWrong()
     elements.spinButton.focus()
     return
@@ -390,10 +401,6 @@ function resolveSpin(segment) {
     : `Сектор ${segment.label}: называйте букву`
   tone(660, .12, 'sine')
   elements.letterInput.focus()
-}
-
-function getMissingLetters() {
-  return [...new Set([...lettersOnly(state.puzzle.answer)])].filter((letter) => !state.guessed.has(letter))
 }
 
 function guessLetter(rawLetter) {
@@ -426,20 +433,18 @@ function guessLetter(rawLetter) {
     elements.spinStatus.textContent = occurrences === 1
       ? `Есть одна буква ${letter}. +${state.spinValue} очков`
       : `Есть ${occurrences} буквы ${letter}. +${state.spinValue * occurrences} очков`
-    pickHostLine('correct')
     soundCorrect()
   } else {
     state.mistakes += 1
     keyboardKey.classList.add('is-wrong')
-    elements.spinStatus.textContent = `Буквы ${letter} нет. Ход переходит воображаемому сопернику.`
-    pickHostLine('wrong')
+    elements.spinStatus.textContent = `Буквы ${letter} нет. Крутите барабан снова.`
     soundWrong()
   }
 
   updateScoreboard()
   setLetterControls(false)
 
-  if (getMissingLetters().length === 0) {
+  if (isPuzzleSolved()) {
     finishGame(true, 'Все буквы открыты. Это было технично!')
   } else if (state.mistakes >= 6) {
     finishGame(false, 'Шесть ошибок — табло уходит на перезагрузку.')
@@ -457,7 +462,7 @@ function guessAnswer(rawAnswer) {
   }
 
   if (answer === state.puzzle.answer) {
-    ;[...lettersOnly(state.puzzle.answer)].forEach((letter) => state.guessed.add(letter))
+    getPuzzleWords().forEach((word, index) => state.solvedWords.add(index))
     updateBoard()
     state.score += 2000
     updateScoreboard()
@@ -465,11 +470,41 @@ function guessAnswer(rawAnswer) {
     return
   }
 
+  const words = getPuzzleWords()
+  const matchingIndexes = words
+    .map((word, index) => ({ word, index }))
+    .filter(({ word, index }) => word === answer && !isWordSolved(index))
+    .map(({ index }) => index)
+
+  if (matchingIndexes.length > 0) {
+    matchingIndexes.forEach((index) => state.solvedWords.add(index))
+    state.score += 750 * matchingIndexes.length
+    elements.answerInput.value = ''
+    updateBoard()
+    updateScoreboard()
+    soundCorrect()
+
+    if (isPuzzleSolved()) {
+      finishGame(true, 'Все слова открыты по отдельности. Отличная работа!')
+    } else {
+      const remaining = words.filter((word, index) => !isWordSolved(index)).length
+      elements.spinStatus.textContent = `Слово «${answer}» открыто. Осталось слов: ${remaining}.`
+      elements.answerInput.focus()
+    }
+    return
+  }
+
+  const alreadySolved = words.some((word, index) => word === answer && isWordSolved(index))
+  if (alreadySolved) {
+    elements.spinStatus.textContent = `Слово «${answer}» уже открыто. Введите оставшееся слово.`
+    elements.answerInput.select()
+    return
+  }
+
   state.mistakes += 1
   updateScoreboard()
   elements.answerInput.select()
   elements.spinStatus.textContent = 'Ответ не совпал. Минус одна попытка.'
-  elements.hostMessage.textContent = 'Ответ звучал уверенно, но тесты упали.'
   soundWrong()
 
   if (state.mistakes >= 6) finishGame(false, 'Шесть ошибок — выпуск завершён.')
@@ -561,9 +596,15 @@ elements.topicList.addEventListener('keydown', (event) => {
   nextButton.focus()
 })
 
+elements.difficultyInputs.forEach((input) => {
+  input.addEventListener('change', () => {
+    if (input.checked) state.difficulty = input.value
+  })
+})
+
 elements.startPreset.addEventListener('click', () => {
   state.round = 1
-  const puzzle = randomItem(PUZZLES[state.topic])
+  const puzzle = randomItem(getPresetPool())
   startGame(puzzle, 'preset')
 })
 
@@ -615,7 +656,7 @@ elements.soundToggle.addEventListener('click', () => setSound(!state.sound))
 elements.nextRound.addEventListener('click', () => {
   elements.resultDialog.close()
   state.round += 1
-  if (state.source === 'preset') startGame(randomItem(PUZZLES[state.topic]), 'preset')
+  if (state.source === 'preset') startGame(randomItem(getPresetPool()), 'preset')
   else returnToEditor(true)
 })
 
