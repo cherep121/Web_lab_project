@@ -18,16 +18,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      name: cringelab1-pages
+      url: https://cherep121.github.io/Web_lab_project/cringelab1/
     steps:
       - uses: actions/checkout@v7
       - uses: actions/configure-pages@v6
       - name: Prepare static site
         run: |
-          mkdir -p _site
+          mkdir -p _site/cringelab1
           cp index.html styles.css script.js _site/
-          cp -r assets _site/
+          cp index.html styles.css script.js _site/cringelab1/
       - uses: actions/upload-pages-artifact@v5
         with:
           path: ./_site

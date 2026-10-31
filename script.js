@@ -70,6 +70,7 @@ const elements = {
   wordBoard: document.querySelector('#word-board'),
   wheel: document.querySelector('#wheel'),
   wheelResult: document.querySelector('#wheel-result'),
+  sectorResult: document.querySelector('#sector-result'),
   spinStatus: document.querySelector('#spin-status'),
   spinButton: document.querySelector('#spin-wheel'),
   letterForm: document.querySelector('#letter-form'),
@@ -178,10 +179,10 @@ function soundWin() {
 function buildWheelLabels() {
   WHEEL_SEGMENTS.forEach((segment, index) => {
     const label = document.createElement('span')
-    label.className = 'wheel__label'
+    label.className = `wheel__label${segment.type ? ` wheel__label--${segment.type}` : ''}`
     label.textContent = segment.label
     label.style.setProperty('--angle', `${index * 45}deg`)
-    label.style.setProperty('--counter-angle', `${index * -45}deg`)
+    label.style.setProperty('--label-angle', `${index > 3 && index < 8 ? 90 : -90}deg`)
     elements.wheel.insertBefore(label, elements.wheel.firstChild)
   })
 }
@@ -338,6 +339,8 @@ function startGame(puzzle, source = 'preset') {
   state.spinning = false
   elements.answerInput.value = ''
   elements.wheelResult.textContent = 'КРУТИ'
+  elements.sectorResult.textContent = '—'
+  elements.sectorResult.className = ''
   elements.spinStatus.textContent = 'Сначала вращайте барабан'
   elements.clueText.textContent = state.puzzle.clue
   setLetterControls(false)
@@ -357,6 +360,8 @@ function spinWheel() {
   document.body.classList.add('is-spinning')
   elements.spinButton.disabled = true
   elements.wheelResult.textContent = '...'
+  elements.sectorResult.textContent = 'Вращение...'
+  elements.sectorResult.className = 'is-spinning'
   elements.spinStatus.textContent = 'Колесо решает вашу судьбу...'
   const index = pickWeightedSegmentIndex()
   const extraTurns = 5 + Math.floor(Math.random() * 3)
@@ -384,6 +389,8 @@ function resolveSpin(segment) {
   document.body.classList.remove('is-spinning')
   elements.spinButton.disabled = false
   elements.wheelResult.textContent = segment.label
+  elements.sectorResult.textContent = segment.label
+  elements.sectorResult.className = segment.type ? `is-${segment.type}` : 'is-points'
 
   if (segment.type === 'bankrupt') {
     state.score = 0
