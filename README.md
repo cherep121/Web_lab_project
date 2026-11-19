@@ -36,10 +36,16 @@ node dist/task2.js
 node dist/task9.js
 ```
 
-Для запуска всех задач в PowerShell:
+Для сборки и удобного запуска всех задач с визуальными разделителями:
 
-```powershell
-1..9 | ForEach-Object { node "dist/task$_.js" }
+```bash
+npm start
+```
+
+Если проект уже собран, повторный запуск без компиляции:
+
+```bash
+npm run run:all
 ```
 
 ## Выполненные задачи

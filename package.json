@@ -5,6 +5,8 @@
   "description": "Лабораторная работа №8: девять практических задач на TypeScript",
   "type": "module",
   "scripts": {
+    "start": "npm run build && node scripts/run-all.mjs",
+    "run:all": "node scripts/run-all.mjs",
     "check": "tsc -p tsconfig.json --noEmit",
     "build": "tsc -p tsconfig.json"
   },
