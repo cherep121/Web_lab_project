@@ -7,7 +7,7 @@
 
 .about-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 150px;
+  grid-template-columns: minmax(0, 1fr) 180px;
   align-items: center;
   gap: 30px;
   padding: clamp(26px, 6vw, 48px);
@@ -31,29 +31,77 @@
     font-size: rem(17px);
   }
 
-  &__mark {
+  &__visual {
+    position: relative;
     display: grid;
-    place-content: center;
-    width: 140px;
+    place-items: center;
+    width: 170px;
     aspect-ratio: 1;
-    border-radius: 32% 68% 62% 38% / 45% 38% 62% 55%;
-    color: #fff;
-    background: var(--color-accent);
-    transform: rotate(5deg);
-    box-shadow: var(--shadow-hover);
-    text-align: center;
+    border-radius: 50%;
+    background: var(--color-bg-alt);
 
-    span {
-      font-size: rem(64px);
-      font-weight: 900;
-      line-height: 0.9;
+    &::before,
+    &::after {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--color-accent);
+      content: '';
     }
 
-    small {
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+    &::before {
+      top: 14px;
+      right: 18px;
+      width: 24px;
+      height: 24px;
+      opacity: 0.22;
     }
+
+    &::after {
+      bottom: 22px;
+      left: 14px;
+      width: 14px;
+      height: 14px;
+      opacity: 0.38;
+    }
+
+    svg {
+      position: relative;
+      z-index: 1;
+      width: 158px;
+      filter: drop-shadow(0 12px 14px rgb(15 23 42 / 14%));
+      transform: rotate(3deg);
+    }
+  }
+
+  &__paper {
+    fill: var(--color-surface);
+    stroke: var(--color-accent);
+    stroke-width: 3;
+  }
+
+  &__heading-line,
+  &__check {
+    fill: var(--color-accent);
+  }
+
+  &__heading-line {
+    opacity: 0.35;
+  }
+
+  &__tick {
+    fill: none;
+    stroke: #fff;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 3;
+  }
+
+  &__task-line {
+    fill: none;
+    stroke: var(--color-text-muted);
+    stroke-linecap: round;
+    stroke-width: 5;
+    opacity: 0.62;
   }
 }
 
@@ -177,7 +225,7 @@
     grid-template-columns: 1fr;
   }
 
-  .about-hero__mark {
+  .about-hero__visual {
     display: none;
   }
 

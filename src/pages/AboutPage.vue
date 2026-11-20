@@ -41,9 +41,31 @@ const progress = computed(() =>
           }}
         </RouterLink>
       </div>
-      <div class="about-hero__mark" aria-hidden="true">
-        <span>9</span>
-        <small>лаба</small>
+      <div class="about-hero__visual" aria-hidden="true">
+        <svg viewBox="0 0 180 180" focusable="false">
+          <rect
+            class="about-hero__paper"
+            x="27"
+            y="17"
+            width="126"
+            height="146"
+            rx="24"
+          />
+          <rect
+            class="about-hero__heading-line"
+            x="52"
+            y="42"
+            width="76"
+            height="10"
+            rx="5"
+          />
+          <circle class="about-hero__check" cx="55" cy="79" r="13" />
+          <path class="about-hero__tick" d="m49 79 4 4 8-9" />
+          <path class="about-hero__task-line" d="M79 75h45M79 84h29" />
+          <circle class="about-hero__check" cx="55" cy="119" r="13" />
+          <path class="about-hero__tick" d="m49 119 4 4 8-9" />
+          <path class="about-hero__task-line" d="M79 115h45M79 124h36" />
+        </svg>
       </div>
     </section>
 
