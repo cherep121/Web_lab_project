@@ -22,12 +22,27 @@ jobs:
       url: https://cherep121.github.io/Web_lab_project/cringelab1/
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/configure-pages@v6
-      - name: Prepare static site
+      - name: Checkout Lab 7
+        uses: actions/checkout@v7
+        with:
+          ref: lab7
+          path: _lab7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: _lab7/package-lock.json
+      - name: Build Lab 7
         run: |
-          mkdir -p _site/cringelab1
+          npm --prefix _lab7 ci
+          npm --prefix _lab7 run build
+      - uses: actions/configure-pages@v6
+      - name: Prepare combined Pages site
+        run: |
+          mkdir -p _site/cringelab1 _site/lab7
           cp index.html styles.css script.js _site/
           cp index.html styles.css script.js _site/cringelab1/
+          cp -r _lab7/dist/. _site/lab7/
       - uses: actions/upload-pages-artifact@v5
         with:
           path: ./_site
