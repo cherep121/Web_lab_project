@@ -1,41 +1,58 @@
 <script setup lang="ts">
-import { nextTick, onMounted, ref } from 'vue'
+import { computed, nextTick, onMounted, reactive, ref } from 'vue'
+import { validateTaskInput, type Task, type TaskInput } from '../domain/todo'
 
-const props = withDefaults(
-  defineProps<{
-    initialTitle?: string
-    isEditing?: boolean
-  }>(),
-  { initialTitle: '', isEditing: false }
-)
+const props = withDefaults(defineProps<{ task?: Task | null }>(), {
+  task: null
+})
 
 const emit = defineEmits<{
-  save: [title: string]
+  save: [input: TaskInput]
   close: []
 }>()
 
+function toInputDate(value: string | null | undefined): string {
+  if (!value) return ''
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return ''
+  const local = new Date(date.getTime() - date.getTimezoneOffset() * 60_000)
+  return local.toISOString().slice(0, 16)
+}
+
 const dialog = ref<HTMLDialogElement | null>(null)
 const titleInput = ref<HTMLInputElement | null>(null)
-const draft = ref(props.initialTitle)
+const isEditing = computed(() => props.task !== null)
+const draft = reactive({
+  title: props.task?.title ?? '',
+  startDate: toInputDate(props.task?.startDate),
+  dueDate: toInputDate(props.task?.dueDate),
+  priority: props.task?.priority ?? 0,
+  tags: props.task?.tags.join(', ') ?? ''
+})
 const errorMessage = ref('')
 
 onMounted(async () => {
   dialog.value?.showModal()
   await nextTick()
   titleInput.value?.focus()
-  if (props.isEditing) titleInput.value?.select()
+  if (isEditing.value) titleInput.value?.select()
 })
 
 function submit(): void {
-  const title = draft.value.trim()
-
-  if (title.length < 2) {
-    errorMessage.value = 'Название должно быть не короче 2 символов.'
-    titleInput.value?.focus()
+  const input: TaskInput = {
+    title: draft.title,
+    startDate: draft.startDate || null,
+    dueDate: draft.dueDate || null,
+    priority: Number(draft.priority),
+    tags: draft.tags.split(',')
+  }
+  const validation = validateTaskInput(input)
+  if (!validation.ok) {
+    errorMessage.value = validation.message
     return
   }
 
-  emit('save', title)
+  emit('save', validation.value)
 }
 
 function requestClose(): void {
@@ -65,19 +82,56 @@ function handleBackdropClick(event: MouseEvent): void {
         <input
           id="task-title"
           ref="titleInput"
-          v-model="draft"
+          v-model="draft.title"
           class="form-group__input"
           type="text"
           maxlength="200"
           autocomplete="off"
+          required
           :aria-invalid="errorMessage ? 'true' : undefined"
-          :aria-describedby="errorMessage ? 'task-title-error' : undefined"
           @input="errorMessage = ''"
         />
-        <span id="task-title-error" class="form-group__error" role="alert">
-          {{ errorMessage }}
-        </span>
       </div>
+
+      <div class="modal__fields">
+        <div class="form-group">
+          <label for="task-start">Начало</label>
+          <input
+            id="task-start"
+            v-model="draft.startDate"
+            type="datetime-local"
+          />
+        </div>
+        <div class="form-group">
+          <label for="task-due">Дедлайн</label>
+          <input id="task-due" v-model="draft.dueDate" type="datetime-local" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="task-priority">Приоритет</label>
+        <select id="task-priority" v-model.number="draft.priority">
+          <option :value="0">Низкий</option>
+          <option :value="1">Обычный</option>
+          <option :value="2">Высокий</option>
+          <option :value="3">Срочный</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="task-tags">Метки через запятую</label>
+        <input
+          id="task-tags"
+          v-model="draft.tags"
+          type="text"
+          maxlength="200"
+          placeholder="Учёба, дом, работа"
+        />
+      </div>
+
+      <p v-if="errorMessage" class="notice notice--error" role="alert">
+        {{ errorMessage }}
+      </p>
 
       <div class="modal__actions">
         <button

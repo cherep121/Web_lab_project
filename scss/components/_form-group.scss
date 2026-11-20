@@ -14,7 +14,8 @@
   }
 
   &__input,
-  input {
+  input,
+  select {
     width: 100%;
     padding: rem(10px) rem(14px);
     border: 2px solid var(--color-border);
@@ -23,6 +24,7 @@
     color: var(--color-text);
     font-family: inherit;
     font-size: rem(15px);
+    min-height: 44px;
     transition:
       border-color $transition,
       box-shadow $transition,

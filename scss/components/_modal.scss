@@ -34,6 +34,12 @@
     color: var(--color-text);
   }
 
+  &__fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
   &__actions {
     display: flex;
     justify-content: flex-end;
@@ -54,6 +60,11 @@
 
   .modal__form {
     padding: rem(20px);
+  }
+
+  .modal__fields {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 
   .modal__actions {

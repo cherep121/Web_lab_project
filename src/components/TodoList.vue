@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TodoItem from './TodoItem.vue'
-import type { Task } from '../types/todo'
+import type { Task } from '../domain/todo'
 
 defineProps<{
   tasks: Task[]

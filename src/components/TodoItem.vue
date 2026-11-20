@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { Task } from '../types/todo'
+import { PRIORITY_LABELS, type Task } from '../domain/todo'
 
 const props = defineProps<{ task: Task }>()
 
@@ -14,6 +14,16 @@ const checkboxId = computed(() => `task-${props.task.id}-done`)
 const titleId = computed(() => `task-${props.task.id}-title`)
 const editId = computed(() => `task-${props.task.id}-edit`)
 const deleteId = computed(() => `task-${props.task.id}-delete`)
+const priorityLabel = computed(() => PRIORITY_LABELS[props.task.priority])
+
+function formatDate(value: string): string {
+  return new Intl.DateTimeFormat('ru-RU', {
+    day: '2-digit',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit'
+  }).format(new Date(value))
+}
 
 function toggleTask(event: Event): void {
   if (event.target instanceof HTMLInputElement) {
@@ -32,9 +42,23 @@ function toggleTask(event: Event): void {
         :checked="task.done"
         @change="toggleTask"
       />
-      <label :id="titleId" class="task__title" :for="checkboxId">
-        {{ task.title }}
-      </label>
+      <div class="task__content">
+        <label :id="titleId" class="task__title" :for="checkboxId">
+          {{ task.title }}
+        </label>
+        <div class="task__meta">
+          <span class="task__priority" :data-priority="task.priority">
+            {{ priorityLabel }}
+          </span>
+          <span v-if="task.startDate"
+            >Начало: {{ formatDate(task.startDate) }}</span
+          >
+          <span v-if="task.dueDate">До: {{ formatDate(task.dueDate) }}</span>
+          <span v-for="tag in task.tags" :key="tag" class="task__tag">
+            {{ tag }}
+          </span>
+        </div>
+      </div>
     </div>
 
     <div class="task__actions">
