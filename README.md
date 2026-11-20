@@ -13,4 +13,6 @@
 - `lab6` — To-Do List на Vue 3 и Vite;
 - `lab7` — TaskSpace на Vue 3, Pinia и Vue Router;
 - `lab-8` — основы TypeScript и Node.js;
+- `lab9` — перенос TaskSpace на TypeScript, ESLint и Prettier;
+- `lab10` — архитектура TaskSpace, даты, приоритеты, метки и представления задач;
 - `cringelab1` — интерактивная мем-игра «Поле Багов».
