@@ -1,8 +1,8 @@
 {
-  "name": "taskspace-vue-lab-9",
+  "name": "taskspace-vue-lab-10",
   "version": "1.0.0",
   "private": true,
-  "description": "TaskSpace на Vue 3 и TypeScript — лабораторная работа №9",
+  "description": "TaskSpace с разделённой архитектурой и расширенными задачами — лабораторная работа №10",
   "type": "module",
   "scripts": {
     "dev": "vite",

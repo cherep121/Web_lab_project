@@ -23,7 +23,7 @@ const progress = computed(() =>
   <div class="container about">
     <section class="about-hero" aria-labelledby="about-title">
       <div>
-        <p class="eyebrow">Лабораторная работа №9</p>
+        <p class="eyebrow">Лабораторная работа №10</p>
         <h1 id="about-title">Спокойное место для важных дел</h1>
         <p class="about-hero__lead">
           TaskSpace — учебный To‑Do, который вырос из простого списка задач в
@@ -123,7 +123,7 @@ const progress = computed(() =>
 
     <section class="project-story" aria-labelledby="story-title">
       <p class="eyebrow">Как менялся проект</p>
-      <h2 id="story-title">Четыре этапа одной идеи</h2>
+      <h2 id="story-title">Пять этапов одной идеи</h2>
       <ol class="project-story__list">
         <li>
           <strong>Лаба 4</strong
@@ -140,6 +140,10 @@ const progress = computed(() =>
         <li>
           <strong>Лаба 9</strong
           ><span>TypeScript и автоматические проверки качества кода.</span>
+        </li>
+        <li>
+          <strong>Лаба 10</strong
+          ><span>Даты, приоритеты, метки и разделение логики по слоям.</span>
         </li>
       </ol>
     </section>
