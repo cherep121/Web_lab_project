@@ -94,3 +94,7 @@ Web-lab-project/
 ├─ README.md
 └─ .gitignore
 ```
+
+## 🌐 Опубликованная версия
+
+[https://cherep121.github.io/Web_lab_project/lab7/](https://cherep121.github.io/Web_lab_project/lab7/)
