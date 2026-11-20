@@ -1,14 +1,25 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import ThemeToggle from './components/ThemeToggle.vue'
 import { useStoredTheme } from './composables/useStoredTheme'
 import { useUserStore } from './stores/user'
+import { useTodoStore } from './stores/todo'
 
 const router = useRouter()
 const userStore = useUserStore()
+const todoStore = useTodoStore()
 const { isDark } = useStoredTheme()
 const userEmail = computed(() => userStore.currentUser?.email ?? '')
+
+watch(
+  () => userStore.currentUserId,
+  (userId) => {
+    if (userId) todoStore.loadTasks(userId)
+    else todoStore.clearTasks()
+  },
+  { immediate: true }
+)
 
 function toggleTheme(): void {
   isDark.value = !isDark.value

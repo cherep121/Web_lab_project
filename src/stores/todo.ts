@@ -1,15 +1,6 @@
 import { defineStore } from 'pinia'
-import type { Task } from '../types/todo'
-
-function createTaskId(): string {
-  if (
-    typeof crypto !== 'undefined' &&
-    typeof crypto.randomUUID === 'function'
-  ) {
-    return `task-${crypto.randomUUID()}`
-  }
-  return `task-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`
-}
+import type { Task, TaskInput } from '../domain/todo'
+import { todoService } from '../setup/todo'
 
 export const useTodoStore = defineStore('todos', {
   state: () => ({ tasks: [] as Task[] }),
@@ -22,39 +13,32 @@ export const useTodoStore = defineStore('todos', {
   },
 
   actions: {
-    addTask(userId: string, title: string): void {
-      this.tasks.push({
-        id: createTaskId(),
-        userId,
-        title,
-        done: false,
-        createdAt: new Date().toISOString()
-      })
+    loadTasks(userId: string): void {
+      this.tasks = todoService.load(userId)
     },
 
-    updateTask(userId: string, taskId: string, title: string): void {
-      const task = this.tasks.find(
-        (item) => item.id === taskId && item.userId === userId
-      )
-      if (task) task.title = title
+    clearTasks(): void {
+      this.tasks = []
+    },
+
+    addTask(userId: string, input: TaskInput) {
+      const result = todoService.create(userId, input)
+      if (result.ok) this.tasks = result.tasks
+      return result
+    },
+
+    updateTask(userId: string, taskId: string, input: TaskInput) {
+      const result = todoService.update(userId, taskId, input)
+      if (result.ok) this.tasks = result.tasks
+      return result
     },
 
     toggleTask(userId: string, taskId: string, done: boolean): void {
-      const task = this.tasks.find(
-        (item) => item.id === taskId && item.userId === userId
-      )
-      if (task) task.done = done
+      this.tasks = todoService.toggle(userId, taskId, done)
     },
 
     deleteTask(userId: string, taskId: string): void {
-      this.tasks = this.tasks.filter(
-        (item) => item.id !== taskId || item.userId !== userId
-      )
+      this.tasks = todoService.remove(userId, taskId)
     }
-  },
-
-  persist: {
-    key: 'taskspace.tasks',
-    pick: ['tasks']
   }
 })
