@@ -1,12 +1,13 @@
-<script setup>
-defineProps({
-  modelValue: {
-    type: String,
-    required: true
-  }
-})
+<script setup lang="ts">
+defineProps<{ modelValue: string }>()
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
+
+function updateValue(event: Event): void {
+  if (event.target instanceof HTMLInputElement) {
+    emit('update:modelValue', event.target.value)
+  }
+}
 </script>
 
 <template>
@@ -19,7 +20,7 @@ const emit = defineEmits(['update:modelValue'])
       :value="modelValue"
       placeholder="Найти задачу..."
       autocomplete="off"
-      @input="emit('update:modelValue', $event.target.value)"
-    >
+      @input="updateValue"
+    />
   </div>
 </template>

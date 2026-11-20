@@ -3,15 +3,30 @@ import AboutPage from '../pages/AboutPage.vue'
 import LoginPage from '../pages/LoginPage.vue'
 import RegisterPage from '../pages/RegisterPage.vue'
 import TodoPage from '../pages/TodoPage.vue'
-import { useUserStore } from '../stores/user.js'
+import { useUserStore } from '../stores/user'
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     { path: '/', redirect: '/about' },
-    { path: '/login', name: 'login', component: LoginPage, meta: { guestOnly: true } },
-    { path: '/register', name: 'register', component: RegisterPage, meta: { guestOnly: true } },
-    { path: '/todo', name: 'todo', component: TodoPage, meta: { requiresAuth: true } },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginPage,
+      meta: { guestOnly: true }
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterPage,
+      meta: { guestOnly: true }
+    },
+    {
+      path: '/todo',
+      name: 'todo',
+      component: TodoPage,
+      meta: { requiresAuth: true }
+    },
     { path: '/about', name: 'about', component: AboutPage },
     { path: '/:pathMatch(.*)*', redirect: '/about' }
   ],

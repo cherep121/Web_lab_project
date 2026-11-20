@@ -3,5 +3,5 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
-  base: '/Web_lab_project/lab7/'
+  base: '/Web_lab_project/lab9/'
 })

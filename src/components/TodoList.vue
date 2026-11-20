@@ -1,18 +1,17 @@
-<script setup>
+<script setup lang="ts">
 import TodoItem from './TodoItem.vue'
+import type { Task } from '../types/todo'
 
-defineProps({
-  tasks: {
-    type: Array,
-    required: true
-  },
-  emptyMessage: {
-    type: String,
-    required: true
-  }
-})
+defineProps<{
+  tasks: Task[]
+  emptyMessage: string
+}>()
 
-const emit = defineEmits(['toggle', 'edit', 'delete'])
+const emit = defineEmits<{
+  toggle: [taskId: string, done: boolean]
+  edit: [taskId: string]
+  delete: [taskId: string]
+}>()
 </script>
 
 <template>
@@ -24,7 +23,7 @@ const emit = defineEmits(['toggle', 'edit', 'delete'])
         v-for="task in tasks"
         :key="task.id"
         :task="task"
-        @toggle="(...args) => emit('toggle', ...args)"
+        @toggle="(taskId, done) => emit('toggle', taskId, done)"
         @edit="emit('edit', $event)"
         @delete="emit('delete', $event)"
       />

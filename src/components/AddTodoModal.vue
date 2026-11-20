@@ -1,21 +1,21 @@
-<script setup>
+<script setup lang="ts">
 import { nextTick, onMounted, ref } from 'vue'
 
-const props = defineProps({
-  initialTitle: {
-    type: String,
-    default: ''
-  },
-  isEditing: {
-    type: Boolean,
-    default: false
-  }
-})
+const props = withDefaults(
+  defineProps<{
+    initialTitle?: string
+    isEditing?: boolean
+  }>(),
+  { initialTitle: '', isEditing: false }
+)
 
-const emit = defineEmits(['save', 'close'])
+const emit = defineEmits<{
+  save: [title: string]
+  close: []
+}>()
 
-const dialog = ref(null)
-const titleInput = ref(null)
+const dialog = ref<HTMLDialogElement | null>(null)
+const titleInput = ref<HTMLInputElement | null>(null)
 const draft = ref(props.initialTitle)
 const errorMessage = ref('')
 
@@ -26,7 +26,7 @@ onMounted(async () => {
   if (props.isEditing) titleInput.value?.select()
 })
 
-function submit() {
+function submit(): void {
   const title = draft.value.trim()
 
   if (title.length < 2) {
@@ -38,11 +38,11 @@ function submit() {
   emit('save', title)
 }
 
-function requestClose() {
+function requestClose(): void {
   emit('close')
 }
 
-function handleBackdropClick(event) {
+function handleBackdropClick(event: MouseEvent): void {
   if (event.target === dialog.value) requestClose()
 }
 </script>
@@ -73,19 +73,21 @@ function handleBackdropClick(event) {
           :aria-invalid="errorMessage ? 'true' : undefined"
           :aria-describedby="errorMessage ? 'task-title-error' : undefined"
           @input="errorMessage = ''"
-        >
+        />
         <span id="task-title-error" class="form-group__error" role="alert">
           {{ errorMessage }}
         </span>
       </div>
 
       <div class="modal__actions">
-        <button type="button" class="button button--ghost" @click="requestClose">
+        <button
+          type="button"
+          class="button button--ghost"
+          @click="requestClose"
+        >
           Отмена
         </button>
-        <button type="submit" class="button button--primary">
-          Сохранить
-        </button>
+        <button type="submit" class="button button--primary">Сохранить</button>
       </div>
     </form>
   </dialog>

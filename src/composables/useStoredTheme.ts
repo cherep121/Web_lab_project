@@ -1,8 +1,9 @@
-import { ref, watch } from 'vue'
+import { ref, watch, type Ref } from 'vue'
 
 const THEME_KEY = 'todo.theme'
+type Theme = 'dark' | 'light'
 
-function loadTheme() {
+function loadTheme(): Theme {
   try {
     const savedTheme = localStorage.getItem(THEME_KEY)
     if (savedTheme === 'dark' || savedTheme === 'light') return savedTheme
@@ -10,10 +11,12 @@ function loadTheme() {
     console.warn('Не удалось прочитать тему из localStorage:', error)
   }
 
-  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light'
 }
 
-export function useStoredTheme() {
+export function useStoredTheme(): { isDark: Ref<boolean> } {
   const isDark = ref(loadTheme() === 'dark')
 
   watch(
