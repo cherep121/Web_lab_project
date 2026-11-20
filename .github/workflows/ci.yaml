@@ -1,8 +1,8 @@
-name: Build and publish Lab 9
+name: Build and publish Lab 10
 
 on:
   push:
-    branches: [lab9]
+    branches: [lab10]
   workflow_dispatch:
 
 permissions:
@@ -18,8 +18,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
-      name: lab9-pages
-      url: https://cherep121.github.io/Web_lab_project/lab9/
+      name: lab10-pages
+      url: https://cherep121.github.io/Web_lab_project/lab10/
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -28,6 +28,17 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+
+      - name: Checkout Lab 9
+        uses: actions/checkout@v7
+        with:
+          ref: lab9
+          path: _lab9
+      - name: Build Lab 9
+        working-directory: _lab9
+        run: |
+          npm ci
+          npm run build
 
       - name: Checkout Lab 7
         uses: actions/checkout@v7
@@ -49,9 +60,10 @@ jobs:
       - uses: actions/configure-pages@v6
       - name: Prepare combined Pages site
         run: |
-          mkdir -p _site/lab7 _site/lab9 _site/cringelab1
+          mkdir -p _site/lab7 _site/lab9 _site/lab10 _site/cringelab1
           cp dist/index.html _site/index.html
-          cp -r dist/. _site/lab9/
+          cp -r dist/. _site/lab10/
+          cp -r _lab9/dist/. _site/lab9/
           cp -r _lab7/dist/. _site/lab7/
           cp _cringelab/index.html _cringelab/styles.css _cringelab/script.js _site/cringelab1/
       - uses: actions/upload-pages-artifact@v5
