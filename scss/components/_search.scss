@@ -13,8 +13,11 @@
     color: var(--color-text);
     font-family: inherit;
     font-size: rem(15px);
-    transition: border-color $transition, box-shadow $transition,
-                background-color $transition, color $transition;
+    transition:
+      border-color $transition,
+      box-shadow $transition,
+      background-color $transition,
+      color $transition;
 
     &::placeholder {
       color: var(--color-text-muted);

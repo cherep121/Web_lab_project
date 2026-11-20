@@ -1,12 +1,18 @@
 {
-  "name": "taskspace-vue-lab-7",
+  "name": "taskspace-vue-lab-9",
   "version": "1.0.0",
   "private": true,
-  "description": "TaskSpace на Vue 3 с Pinia, Vue Router и учебной авторизацией — лабораторная работа №7",
+  "description": "TaskSpace на Vue 3 и TypeScript — лабораторная работа №9",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "type-check": "vue-tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run type-check && npm run lint && npm run format:check",
+    "build": "npm run check && vite build",
     "preview": "vite preview"
   },
   "author": "Чистюхин Антон",
@@ -18,8 +24,19 @@
     "vue-router": "^5.4.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^24.10.1",
     "@vitejs/plugin-vue": "^6.0.10",
+    "@vue/eslint-config-typescript": "^14.6.0",
+    "@vue/tsconfig": "^0.8.1",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.6.2",
+    "globals": "^16.5.0",
+    "prettier": "^3.7.4",
     "sass": "^1.106.1",
+    "typescript": "^5.9.3",
+    "vue-tsc": "^3.1.7",
     "vite": "^8.3.5"
   }
 }

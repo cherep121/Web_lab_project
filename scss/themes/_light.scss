@@ -5,13 +5,13 @@
     --color-#{$name}: #{$value};
   }
 
-  --radius:       #{$radius};
-  --radius-sm:    #{$radius-sm};
-  --radius-xs:    #{$radius-xs};
-  --shadow:       #{$shadow};
+  --radius: #{$radius};
+  --radius-sm: #{$radius-sm};
+  --radius-xs: #{$radius-xs};
+  --shadow: #{$shadow};
   --shadow-hover: #{$shadow-hover};
   --shadow-focus: #{$shadow-focus};
-  --container:    #{$container-width};
-  --transition:   #{$transition};
-  --font-family:  #{$font-family-base};
+  --container: #{$container-width};
+  --transition: #{$transition};
+  --font-family: #{$font-family-base};
 }

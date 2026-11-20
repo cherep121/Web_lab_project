@@ -29,7 +29,9 @@
     color: var(--color-text-muted);
     font-size: rem(14px);
     font-weight: 600;
-    transition: color var(--transition), background-color var(--transition);
+    transition:
+      color var(--transition),
+      background-color var(--transition);
 
     &:hover,
     &.router-link-active {
@@ -45,12 +47,12 @@
 }
 
 :root:not([data-theme='dark']) .app-nav__link {
-  color: rgba(255, 255, 255, .82);
+  color: rgba(255, 255, 255, 0.82);
 
   &:hover,
   &.router-link-active {
     color: #fff;
-    background: rgba(255, 255, 255, .15);
+    background: rgba(255, 255, 255, 0.15);
   }
 }
 

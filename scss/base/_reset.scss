@@ -19,7 +19,9 @@ body {
   color: var(--color-text);
   background: var(--color-bg);
   -webkit-font-smoothing: antialiased;
-  transition: background-color $transition, color $transition;
+  transition:
+    background-color $transition,
+    color $transition;
 }
 
 img {
@@ -53,9 +55,9 @@ textarea {
   *,
   *::before,
   *::after {
-    animation-duration: .01ms !important;
+    animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
+    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
 }

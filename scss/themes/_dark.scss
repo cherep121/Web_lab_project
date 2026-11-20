@@ -5,7 +5,7 @@
     --color-#{$name}: #{$value};
   }
 
-  --shadow:       0 6px 20px rgba(0, 0, 0, .4);
-  --shadow-hover: 0 12px 28px rgba(0, 0, 0, .55);
-  --shadow-focus: 0 0 0 3px rgba(124, 197, 222, .5);
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.55);
+  --shadow-focus: 0 0 0 3px rgba(124, 197, 222, 0.5);
 }
